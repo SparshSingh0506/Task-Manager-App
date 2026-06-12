@@ -1,5 +1,6 @@
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  username VARCHAR(255) NOT NULL,
   email TEXT UNIQUE NOT NULL,
   password_hash TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW()
@@ -23,22 +24,3 @@ CREATE TABLE tasks (
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
-
-
-/* Eg:
-User
-└── John
-
-Projects
-├── Work
-└── Personal
-
-Work Tasks
-├── Build API
-├── Fix Bugs
-└── Deploy App
-
-Personal Tasks
-├── Gym
-└── Buy Groceries
-*/
