@@ -20,3 +20,6 @@
   └── Buy Groceries
   ```
 * Chose to use no ORM and instead write raw sql queries to "do it atleast one time". Moreover, raw sql will always be the highest performing over ORMs.
+
+## DAY 2
+* set up auth controller and validation middleware. Spent, time understanding auth and good practices.

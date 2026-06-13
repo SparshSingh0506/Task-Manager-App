@@ -5,6 +5,6 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api/auth', registerRouter);
+app.use('/api/auth', registerRouter);// /api/auth/register
 
 export default app;
