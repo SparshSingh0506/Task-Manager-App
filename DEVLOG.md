@@ -27,3 +27,4 @@
 ## DAY 3
 * Decided to go for Zod for compact validations, preventing ifs ladder. Also, zod does not abstract concepts too much, so fits the use.
 * Made register schema for zod validations and using it in the validation middleware to do an early return in case of error.
+* Separated database operations for a dedicated repositories folder, which will be managed by controller functions.

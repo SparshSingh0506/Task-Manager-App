@@ -5,3 +5,5 @@ export const registerSchema = z.object({
   email: z.string().trim().toLowerCase().pipe(z.email()),
   password: z.string().min(6),
 });
+
+export type UserRegistration = z.infer<typeof registerSchema>;
