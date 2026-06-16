@@ -27,4 +27,12 @@
 ## DAY 3
 * Decided to go for Zod for compact validations, preventing ifs ladder. Also, zod does not abstract concepts too much, so fits the use.
 * Made register schema for zod validations and using it in the validation middleware to do an early return in case of error.
+* Added zod validations & transformations of email (trim & lowercase) and user (trim), before they will later be inserted into the db.
 * Separated database operations for a dedicated repositories folder, which will be managed by controller functions.
+
+## DAY 4
+* Made an auth.service.ts layer that will hash the password using bcryptjs and then call the repository layer for db operations.
+* Organized interfaces in a separate folder to contain schema & dbOperation interfaces.
+* Created findUserByEmail() function under the repository layer, to first check if user exists, and if they do, return an error.
+* Created createUser() function under repository layer, to create new record of the user as commanded by the registerController.
+  * Used typescript Pick<> utility type to return only the required user values, keeping in mind that even if in future new fields get added in schema, it does not affect what is returned
