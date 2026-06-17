@@ -36,3 +36,9 @@
 * Created findUserByEmail() function under the repository layer, to first check if user exists, and if they do, return an error.
 * Created createUser() function under repository layer, to create new record of the user as commanded by the registerController.
   * Used typescript Pick<> utility type to return only the required user values, keeping in mind that even if in future new fields get added in schema, it does not affect what is returned
+
+## DAY 5
+* Initiated middlewares, controllers & zod schemas for login feature.
+* Decided to go with jwt auth implementation for learning. Planned Flow:
+  * ```Login request (email & pass) -> validate & transform -> check user exists -> hash paassword & compare -> generate jwt```
+* Implemented request acceptance, validation & transformation middleware, check user exists & password compare. To do next - generate jwt

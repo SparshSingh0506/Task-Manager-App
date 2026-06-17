@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { registerSchema } from "../schemas/register.schema.js";
+import { registerSchema } from "../schemas/register.zod-schema.js";
 
 export const validateRegisterRequest = (req: Request, res: Response, next: NextFunction) => {
   const result = registerSchema.safeParse(req.body);
@@ -17,3 +17,4 @@ export const validateRegisterRequest = (req: Request, res: Response, next: NextF
 
   next();
 }
+
