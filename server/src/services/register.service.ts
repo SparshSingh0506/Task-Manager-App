@@ -6,17 +6,11 @@ export const registerUser = async ({username, email, password}: UserRegistration
   // check user already resgistered by email
   const existingUser = await findUserByEmail(email);
 
-  if (existingUser) throw new Error ("Email already exists!");
+  if (existingUser) throw new Error ("this email already exists!");
 
   // hash password
   const password_hash = await bcrypt.hash(password, 10);
 
   // insert in db
-  try {
-    return await createUser({username, email, password_hash});
-  }
-
-  catch (error) {
-    console.log(error);
-  }
+  return await createUser({username, email, password_hash});
 }

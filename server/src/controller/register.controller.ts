@@ -13,7 +13,7 @@ export const registerController = async (req: Request, res: Response) => {
 
   catch (error) {
     return res.status(409).json({
-      message: error
+      message: "this email already exists"
     })
   }
 }
