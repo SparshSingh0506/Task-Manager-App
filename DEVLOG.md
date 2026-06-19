@@ -41,13 +41,22 @@
 * Initiated middlewares, controllers & zod schemas for login feature.
 * Decided to go with jwt auth implementation for learning. Planned Flow:
   * ```Login request (email & pass) -> validate & transform -> check user exists -> hash paassword & compare -> generate jwt```
-  * As per the standard jwt working ```user gets the token -> stores in cookie/local storage -> sends further requests attached with this token to be verified by server```
+  * As per the standard jwt working ```user gets the token -> stores in cookie/local storage -> sends future requests attached with this token to be verified by server```
 * Implemented request acceptance, validation & transformation middleware, check user exists & password compare. To do next - generate jwt on login.
 * Since returning invalid username or password to the front end is a security risk, simply returned invalid credentials for both fields as a good practice.
 
 ## DAY 6
-* installed jwt & its TS types, and signed a jwt token that sends user id to the user.
+* Installed jwt & its TS types, and signed a jwt token that sends user id to the user.
   * This user id is what the client will send with each request, making it directly queryable to retrieve details and return.
   * How the client sends back the token will be implmented in frontend.
-* created a secret key in .env & implemented jwt signing with that key where the jwt subject is user id.
-* Initiated basic authMiddleware that will read authHeader and return 401 if header not found, meaning a resource was trying to be accessed unauthorized.
+* Created a secret key in .env & implemented jwt signing with that key where the jwt subject is user id.
+
+## DAY 7
+* Initiated basic Authentication Middleware that will read authHeader and return 401 if header not found, meaning a resource was trying to be accessed unauthorized.
+* Fetched http request's authorization header where jwt is recieved by splitting the header, as format from frontend would be: ```{"Authorization": "Bearer <token>"}```.
+  * Also added basic if checks for presence of authorization header and access token.
+* Made express.d.ts declaration file to let express Response type accept jwt's userId subject property.
+  * Since userId is globally declared, any Response type can access userId.
+* used zod to validate jwt payload and update req.userId to be passed to proceeding middlewares and services.
+
+

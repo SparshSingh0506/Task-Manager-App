@@ -1,4 +1,4 @@
-export interface User {
+export interface User { // user ts type that will be retrieved from db
   id: string,
   username: string,
   email: string,
@@ -6,7 +6,7 @@ export interface User {
   created_at: string
 }
 
-export interface Project {
+export interface Project { // project ts type that will be retrieved from db
   id: string,
   user_id: string,
   title: string,
@@ -16,7 +16,7 @@ export interface Project {
 type Status = "todo" | "ongoing" | "done";
 type Priority = "low" | "medium" | "high";
 
-export interface Task {
+export interface Task { // task ts type that will be retrieved from db
   id: string,
   project_id: string,
   title: string,

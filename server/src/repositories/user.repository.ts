@@ -1,5 +1,5 @@
-import type { User } from "../interfaces/schema.interface.js";
-import type { CreateUser } from "../interfaces/dbOperations.interface.js";
+import type { User } from "../types/schema.interfaces.js";
+import type { CreateUser } from "../types/dbOperations.interfaces.js";
 import { db } from "../config/db.config.js";
 
 export const findUserByEmail = async (email: string): Promise<User | null> => {

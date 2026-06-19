@@ -10,13 +10,13 @@ export const loginUser = async ({ email, password }: UserLogin) => {
   const foundUser = await findUserByEmail(email);
   if (!foundUser) throw new Error("Invalid Credentials");
 
-  // cpmpare password
+  // check password
   const passwordMatched = await bcrypt.compare(password, foundUser.password_hash);
   if (!passwordMatched) throw new Error("Invalid Credentials");
 
   //generate jwt
   const token = jwt.sign({
-    sub: foundUser.id  // the client will always pass this id in the token now, which is easily queryable to get all details.
+    sub: foundUser.id  // the client will always pass this id as payload in the token now, which is easily queryable to get all details.
   }, process.env.JWT_SECRET!);
 
   return token;
