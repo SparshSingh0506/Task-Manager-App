@@ -23,3 +23,6 @@ export const createUser = async ({ username, email, password_hash }: CreateUser)
   // although unique user is checked in auth service, but due to race condition if same email is posted at the same time, error can occur.
   return result.rows[0] as CreatedUser;
 }
+
+
+

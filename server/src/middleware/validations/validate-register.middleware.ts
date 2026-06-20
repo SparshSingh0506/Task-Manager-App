@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
-import { registerSchema } from "../schemas/register.zod-schema.js";
+import { registerSchema } from "../../schemas/register.zod-schema.js";
 
-export const validateRegisterRequest = (req: Request, res: Response, next: NextFunction) => {
+export const validateRegisterPOST = (req: Request, res: Response, next: NextFunction) => {
   const result = registerSchema.safeParse(req.body);
   //safeParse from zod wont throw error in case of failure, so no try-catch needed.
 

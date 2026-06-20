@@ -22,7 +22,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
     message: "Token not found."
   });
 
-  // verify token
+  // verify token and payload
   try {
     const payload = jwt.verify(accessToken, process.env.JWT_SECRET!); // jwt.verify() returns decoded payload object, here {"sub": <user id>, "iat" : 123...}
 

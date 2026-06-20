@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import { validateLoginRequest } from "../middleware/validate-login-request.middleware.js";
+import { validateLoginPOST } from "../middleware/validations/validate-login.middleware.js";
 import { loginController } from "../controller/login.controller.js";
 
 const router = Router();
 
-router.post('/login', validateLoginRequest, loginController);
+router.post('/login', validateLoginPOST, loginController);
 
 export default router;

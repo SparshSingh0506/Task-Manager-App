@@ -59,4 +59,10 @@
   * Since userId is globally declared, any Response type can access userId.
 * used zod to validate jwt payload and update req.userId to be passed to proceeding middlewares and services.
 
-
+## DAY 8
+* Decided to design projects post api end point first, the request schema should contain title only as per the schema
+* Updated schema:
+  * Tasks' table - Updated priority & status as enum rather than earlier column check contraint, Gain: faster queriying naturally and logical sorting than lexicographical.
+  * Projects' table - Added description & updated_at field
+  * User's table - Updated username as TEXT as pg parses it same as varchar(n), made email CITEXT to not ensure case sensitiveness at the repository layer for a more robust Source of truth.
+* Created validation middleware for projects Post request and hooked it up along with jwt authentication middleware

@@ -1,8 +1,8 @@
 import type { Request, Response, NextFunction } from "express";
-import { loginSchema } from "../schemas/login.zod-schema.js";
+import { projectsPostSchema } from "../../schemas/projects/projects-post.zod-schema.js";
 
-export const validateLoginRequest = (req: Request, res: Response, next: NextFunction) => {
-  const result = loginSchema.safeParse(req.body);
+export const validateProjectsPOST = (req: Request, res: Response, next: NextFunction) => {
+  const result = projectsPostSchema.safeParse(req.body);
 
   if (!result.success) {
     return res.status(400).json({
