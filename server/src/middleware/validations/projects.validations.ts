@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { projectsPostSchema } from "../../schemas/projects/projects-post.zod-schema.js";
+import { projectsPostSchema } from "../../schemas/projects.zod-schemas.js";
 
 export const validateProjectsPOST = (req: Request, res: Response, next: NextFunction) => {
   const result = projectsPostSchema.safeParse(req.body);

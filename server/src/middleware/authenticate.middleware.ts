@@ -3,7 +3,7 @@ import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { authenticatePayloadSchema } from '../schemas/auth.zod-schemas.js';
 
-// this middleware shall be checked for every request to this app's api end points.
+// this middleware shall be checked primarily for every request to this app's api end points.
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
   // 1. Get header and check if exists
   const authHeader = req.headers.authorization;
@@ -34,7 +34,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
       });
     }
 
-    req.userId = result.data;
+    req.userId = result.data.sub;
 
     next();
   }

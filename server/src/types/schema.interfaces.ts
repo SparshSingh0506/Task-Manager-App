@@ -10,7 +10,9 @@ export interface Project { // project ts type that will be retrieved from db
   id: string,
   user_id: string,
   title: string,
-  created_at: string
+  description: string | null, // ?: sets it undefined, but db should store null
+  created_at: string,
+  updated_at: string
 }
 
 type Status = "todo" | "ongoing" | "done";
@@ -20,10 +22,10 @@ export interface Task { // task ts type that will be retrieved from db
   id: string,
   project_id: string,
   title: string,
-  description?: string,
+  description: string | null,
   status: Status,
   priority: Priority,
-  due_date?: string,
+  due_date: string | null,
   created_at: string,
   updated_at: string
 }

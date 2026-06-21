@@ -14,8 +14,8 @@ export const validateRegister = (req: Request, res: Response, next: NextFunction
     });
   }
 
-  req.body = result.data; 
-  // this sets the orignal request body to the applied transformations by zod, which modifies the req body that will be passed to the next middleware
+  req.body = result.data;
+  // Overwrite req.body with clean applied transformations by zod for the next middleware
 
   next();
 }

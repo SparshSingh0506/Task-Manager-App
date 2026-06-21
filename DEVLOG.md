@@ -23,6 +23,7 @@
 
 ## DAY 2
 * Set up auth controller and validation middleware. Spent, time understanding auth and good practices.
+* Decided to go with the common scalable architecture flow: ```Route -> Middleware -> Controller -> Service -> Repository -> Database``` to keep different aspects separated, modular and responsibilities clear. (CSR pattern)
 
 ## DAY 3
 * Decided to go for Zod for compact validations, preventing ifs ladder. Also, zod does not abstract concepts too much, so fits the use.
@@ -69,3 +70,6 @@
 
 ## DAY 9
 * Grouped register and login files & functions for: zod schemas, validation middlwares, routes, controllers and services into respective single auth files to make files less bloated.
+* Created zod schema for project post request: {title, description} & ts interface for repository layer: {user_id, title, description}
+* Manipulated data to fit the schema of db insertion for /projects POST route, and wrote sql query for the same.
+* Most part went in restructuring code today.
