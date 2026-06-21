@@ -1,9 +1,26 @@
 import 'dotenv/config';
+
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+import type { UserRegistration } from "../schemas/register.zod-schema.js";
 import type { UserLogin } from "../schemas/login.zod-schema.js";
-import { findUserByEmail } from "../repositories/user.repository.js";
+
+import { findUserByEmail, createUser  } from "../repositories/user.repository.js";
+
+
+export const registerUser = async ({username, email, password}: UserRegistration) => {
+  // check user already resgistered by email
+  const existingUser = await findUserByEmail(email);
+
+  if (existingUser) throw new Error ("this email already exists!");
+
+  // hash password
+  const password_hash = await bcrypt.hash(password, 10);
+
+  // insert in db
+  return await createUser({username, email, password_hash});
+}
 
 export const loginUser = async ({ email, password }: UserLogin) => {
   // check user exists by email

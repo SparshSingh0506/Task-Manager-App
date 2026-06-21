@@ -1,7 +1,9 @@
 import type { Request, Response, NextFunction } from "express";
-import { registerSchema } from "../../schemas/register.zod-schema.js";
 
-export const validateRegisterPOST = (req: Request, res: Response, next: NextFunction) => {
+import { registerSchema, loginSchema } from "../../schemas/auth.zod-schemas.js";
+
+
+export const validateRegister = (req: Request, res: Response, next: NextFunction) => {
   const result = registerSchema.safeParse(req.body);
   //safeParse from zod wont throw error in case of failure, so no try-catch needed.
 
@@ -18,3 +20,18 @@ export const validateRegisterPOST = (req: Request, res: Response, next: NextFunc
   next();
 }
 
+
+export const validateLogin = (req: Request, res: Response, next: NextFunction) => {
+  const result = loginSchema.safeParse(req.body);
+
+  if (!result.success) {
+    return res.status(400).json({
+      message: "Invalid request body",
+      error: result.error.flatten(),
+    });
+  }
+
+  req.body = result.data;
+
+  next();
+}

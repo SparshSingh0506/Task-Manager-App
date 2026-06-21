@@ -66,3 +66,6 @@
   * Projects' table - Added description & updated_at field
   * User's table - Updated username as TEXT as pg parses it same as varchar(n), made email CITEXT to not ensure case sensitiveness at the repository layer for a more robust Source of truth.
 * Created validation middleware for projects Post request and hooked it up along with jwt authentication middleware
+
+## DAY 9
+* Grouped register and login files & functions for: zod schemas, validation middlwares, routes, controllers and services into respective single auth files to make files less bloated.

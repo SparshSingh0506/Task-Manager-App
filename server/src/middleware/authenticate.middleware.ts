@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { authenticatePayloadSchema } from '../schemas/authenticate.zod-schema.js';
+import { authenticatePayloadSchema } from '../schemas/auth.zod-schemas.js';
 
 // this middleware shall be checked for every request to this app's api end points.
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-  // get header and check if exists
+  // 1. Get header and check if exists
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -14,7 +14,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
     });
   }
 
-  // split authorization header & get jwt token
+  // 2. Split authorization header & get jwt token
   const accessToken = authHeader.split(" ")[1];
   // req header -> {"Authentication": "Bearer <jwt token>"} -> after split(" ") => ["Bearer", "<jwt token>"], accessing [1] to get token.
 
@@ -22,7 +22,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
     message: "Token not found."
   });
 
-  // verify token and payload
+  // 3. verify token and payload
   try {
     const payload = jwt.verify(accessToken, process.env.JWT_SECRET!); // jwt.verify() returns decoded payload object, here {"sub": <user id>, "iat" : 123...}
 
