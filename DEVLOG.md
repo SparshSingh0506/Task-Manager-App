@@ -73,3 +73,6 @@
 * Created zod schema for project post request: {title, description} & ts interface for repository layer: {user_id, title, description}
 * Manipulated data to fit the schema of db insertion for /projects POST route, and wrote sql query for the same.
 * Most part went in restructuring code today.
+
+## DAY 10
+* Created GET api end point for returning all project's summarized list relevant for the frontend dashboard display.

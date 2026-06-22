@@ -23,3 +23,13 @@ export const createProject = async ({ user_id, title, description }: CreateProje
 
   return result.rows[0] as CreatedProject;
 }
+
+export const getAllProjectsByUserId = async (user_id: string): Promise<Project[]> => {
+  const result = await db.query( // return all from repo layer, and filter required data in service layer.
+    `SELECT * FROM projects
+    WHERE user_id = $1`
+    , [user_id]
+  );
+
+  return result.rows as Project[];
+}

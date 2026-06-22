@@ -40,8 +40,10 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
   }
 
   catch (error) {
+    console.log("Error during authenticate: ", error);
+
     return res.status(401).json({
-      message: "JWT verification failed."
+      message: "Authentication failed."
     });
   }
 }

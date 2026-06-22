@@ -15,6 +15,8 @@ export const registerController = async (req: Request, res: Response) => {
   }
 
   catch (error) {
+    console.log(error);
+
     return res.status(409).json({
       message: "this email already exists",
       error: error
@@ -34,6 +36,8 @@ export const loginController = async (req: Request, res: Response) => {
   }
 
   catch (error) {
+    console.log(error);
+    
     return res.status(401).json({
       message: "Invalid Credentials.",
       error: error
