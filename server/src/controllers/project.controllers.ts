@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { createProjectService, getAllProjectsService } from "../services/project.service.js";
+import { createProjectService, deleteProjectService, getAllProjectsService } from "../services/project.service.js";
 import type { CreateProjectInput } from "../types/dbOperations.interfaces.js";
 
 export const postProjectController = async (req: Request, res: Response) => {
@@ -50,6 +50,30 @@ export const getAllProjectsController = async (req: Request, res: Response) => {
 }
 
 
-export const deleteProjectController = (req: Request, res: Response) => {
-  
+export const deleteProjectController = async (req: Request, res: Response) => {
+  const userId = req.userId;
+  const projectId = req.params.projectId; 
+
+  if (!projectId) {
+    return res.status(400).json({
+      message: "project id not provided.",
+    })
+  }
+
+  try {
+    await deleteProjectService(userId, projectId as string);
+    // not sure why TS is also defining type string[] for projectId when its impossible in url param, so using type assertion as a work around.
+
+    return res.status(200).json({
+      message: "Project was succesfully deleted."
+    })
+  }
+
+  catch (error) {
+    console.log(error);
+
+    return res.status(400).json({
+      message: "ProjectId not found.",
+    });
+  }
 }

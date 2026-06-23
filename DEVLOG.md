@@ -75,4 +75,7 @@
 * Most part went in restructuring code today.
 
 ## DAY 10
-* Created GET api end point for returning all project's summarized list relevant for the frontend dashboard display.
+* Created GET api end point for /project for returning all projects' summarized list relevant for the frontend dashboard display.
+
+## DAY 11
+* Implemented DELETE api end point for /project where projectId would be provided by the url param, following the REST api convention.

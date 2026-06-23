@@ -24,12 +24,25 @@ export const createProject = async ({ user_id, title, description }: CreateProje
   return result.rows[0] as CreatedProject;
 }
 
-export const getAllProjectsByUserId = async (user_id: string): Promise<Project[]> => {
+
+export const getAllProjectsByUserId = async (userId: string): Promise<Project[]> => {
   const result = await db.query( // return all from repo layer, and filter required data in service layer.
     `SELECT * FROM projects
     WHERE user_id = $1`
-    , [user_id]
+    , [userId]
   );
 
   return result.rows as Project[];
+}
+
+
+export const deleteProjectById = async (userId: string, projectId: string) => {
+  const result = await db.query( //db level check for authorization of user to delete a project.
+    `DELETE FROM projects 
+    WHERE user_id = $1 AND 
+    id = $2 `
+    , [userId, projectId]
+  );
+
+  return result.rowCount;
 }
