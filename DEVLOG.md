@@ -79,3 +79,6 @@
 
 ## DAY 11
 * Implemented DELETE api end point for /project where projectId would be provided by the url param, following the REST api convention.
+
+## DAY 12
+* Implemented GET Project by id end point, where project id is provided in url param

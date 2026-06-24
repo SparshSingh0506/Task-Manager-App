@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { createProjectService, deleteProjectService, getAllProjectsService } from "../services/project.service.js";
+import { createProjectService, deleteProjectService, getAllProjectsService, getProjectByIdService } from "../services/project.service.js";
 import type { CreateProjectInput } from "../types/dbOperations.interfaces.js";
 
 export const postProjectController = async (req: Request, res: Response) => {
@@ -34,8 +34,8 @@ export const getAllProjectsController = async (req: Request, res: Response) => {
     const allSummarizedProducts = await getAllProjectsService(req.userId);
 
     return res.status(200).json({
-      message: "All Projects fetched.",
-      allProjects: allSummarizedProducts
+      message: "All Projects' summary fetched.",
+      projects: allSummarizedProducts
     })
   }
 
@@ -70,6 +70,35 @@ export const deleteProjectController = async (req: Request, res: Response) => {
   }
 
   catch (error) {
+    console.log(error);
+
+    return res.status(400).json({
+      message: "ProjectId not found.",
+    });
+  }
+}
+
+
+export const getProjectByIdController = async (req: Request, res: Response) => {
+  const userId = req.userId;
+  const projectId = req.params.projectId; 
+
+  if (!projectId) {
+    return res.status(400).json({
+      message: "project id not provided.",
+    })
+  }
+
+  try {
+    const project = await getProjectByIdService(userId, projectId as string);
+
+    return res.status(200).json({
+      message: "GET Project succesful.",
+      project: project
+    })
+  }
+
+  catch(error) {
     console.log(error);
 
     return res.status(400).json({
