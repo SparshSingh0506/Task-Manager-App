@@ -35,17 +35,23 @@ export const getAllProjectsByUserId = async (userId: string): Promise<Project[]>
   return result.rows as Project[];
 }
 
-
-export const deleteProjectById = async (userId: string, projectId: string): Promise<number | null> => {
+type DeletedProject = Pick<Project, "id" | "user_id" | "title" | "description">
+export const deleteProjectById = async (userId: string, projectId: string): Promise<DeletedProject> => {
   const result = await db.query( //db level check for authorization of user to delete a project.
     `DELETE FROM projects 
     WHERE user_id = $1 
-    AND id = $2 `
+    AND id = $2
+    RETURNING
+      id,
+      user_id,
+      title,
+      description`
     , [userId, projectId]
   );
 
-  return result.rowCount;
+  return result.rows[0] as DeletedProject;
 }
+
 
 export const getProjectById = async (userId: string, projectId: string): Promise<Project> => {
   const result = await db.query(

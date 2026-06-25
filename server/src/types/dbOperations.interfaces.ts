@@ -13,3 +13,6 @@ export interface CreateProjectInput {
 }
 
 // Tasks
+// export interface CreateTaskInput {
+
+// }

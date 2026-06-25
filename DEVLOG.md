@@ -82,3 +82,11 @@
 
 ## DAY 12
 * Implemented GET Project by id end point, where project id is provided in url param
+
+## DAY 13
+* Began designing api end points for /tasks.
+  * My initial approach was to 1. get both projectId & taskId from either url params or 2. get projectId from req.body & taskId from url Param.
+  * Then it would require to first make an sql query (for fetching) to verify the projectId is associated with userId and then another query to verify taskId is associated with projectId. Both can't be done in a single query as tasks table only stores projectId & not userId and projectId only stores userId.
+  * This is inefficient as for one http request, we are querying the db two times. The solution - JOINS
+* Updated delete /project end point to also return deleted projects details by modifying query at repo layer to return specefic values
+* Designed zod schema for POST on /projects/:projectId/tasks request body.

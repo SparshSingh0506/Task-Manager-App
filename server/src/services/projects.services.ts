@@ -1,5 +1,5 @@
 import type { CreateProjectInput } from "../types/dbOperations.interfaces.js";
-import { createProject, getAllProjectsByUserId, deleteProjectById, getProjectById } from "../repositories/project.repository.js";
+import { createProject, getAllProjectsByUserId, deleteProjectById, getProjectById } from "../repositories/projects.repository.js";
 
 export const createProjectService = async (createProjectInput: CreateProjectInput) => {
   // no business logic here yet, but keeping it open for future scaling
@@ -16,18 +16,10 @@ export const getAllProjectsService = async (userId: string) => {
 
 
 export const deleteProjectService = async (userId: string, projectId: string) => {
-  const deletedRows = await deleteProjectById(userId, projectId);
-
-  if (deletedRows === 0) throw new Error("ProjectId not found.");
-  
-  return deletedRows;
+  return await deleteProjectById(userId, projectId);
 }
 
 
 export const getProjectByIdService = async (userId: string, project_id: string) => {
-  const foundProject = await getProjectById(userId, project_id);
-
-  if (!foundProject) throw new Error("ProjectId not found.");
-  
-  return foundProject;
+  return await getProjectById(userId, project_id); // not found error handled at controller
 }

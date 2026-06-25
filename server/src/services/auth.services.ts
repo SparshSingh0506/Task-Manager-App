@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 import type { UserRegistration, UserLogin } from "../schemas/auth.zod-schemas.js";
 
-import { findUserByEmail, createUser } from "../repositories/user.repository.js";
+import { findUserByEmail, createUser } from "../repositories/users.repository.js";
 
 
 export const registerUserService = async ({ username, email, password }: UserRegistration) => {
