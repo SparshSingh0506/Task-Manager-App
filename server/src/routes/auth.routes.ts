@@ -1,11 +1,13 @@
 import { Router } from "express";
 
+import { validateRequest } from "../middlewares/validate-request.middleware.js";
+import { registerSchema, loginSchema } from "../schemas/auth.zod-schemas.js";
+
 import { registerController, loginController } from "../controllers/auth.controllers.js";
-import { validateRegister, validateLogin } from "../middlewares/validations/auth.validations.js";
 
 const router = Router();
 
-router.post('/register', validateRegister, registerController);
-router.post('/login', validateLogin, loginController);
+router.post('/register', validateRequest(registerSchema), registerController);
+router.post('/login', validateRequest(loginSchema), loginController);
 
 export default router;

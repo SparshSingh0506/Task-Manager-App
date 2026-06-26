@@ -90,3 +90,7 @@
   * This is inefficient as for one http request, we are querying the db two times. The solution - JOINS
 * Updated delete /project end point to also return deleted projects details by modifying query at repo layer to return specefic values
 * Designed zod schema for POST on /projects/:projectId/tasks request body.
+
+## DAY 14
+* Refactor multiple validation middlewares for POST on /register, /login and /projects requests into a single global validateRequest() function where the respective request schema will be passed.
+  * This removed redundant code for validations for different requests, and simply condensed it all into a single reusable validate-request file, that will ensure DRY principle.
