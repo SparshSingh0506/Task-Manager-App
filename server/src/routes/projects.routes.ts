@@ -14,10 +14,10 @@ import {
 
 const router = Router();
 
-router.post('/projects', authenticate, validateRequest(projectsPostSchema), postProjectController);
-router.get('/projects', authenticate, getAllProjectsController);
-router.get('/projects/:projectId', authenticate, getProjectByIdController);
-router.delete('/projects/:projectId', authenticate, deleteProjectController);
+router.post('/', authenticate, validateRequest(projectsPostSchema), postProjectController);
+router.get('/', authenticate, getAllProjectsController);
+router.get('/:projectId', authenticate, getProjectByIdController);
+router.delete('/:projectId', authenticate, deleteProjectController);
 
 export default router;  
 

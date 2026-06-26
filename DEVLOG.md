@@ -93,4 +93,7 @@
 
 ## DAY 14
 * Refactor multiple validation middlewares for POST on /register, /login and /projects requests into a single global validateRequest() function where the respective request schema will be passed.
-  * This removed redundant code for validations for different requests, and simply condensed it all into a single reusable validate-request file, that will ensure DRY principle.
+  * This removes redundant code for validations for different requests, and simply condenses it all into a single reusable validate-request file, that will abide by the DRY principle.
+* Encapsulated spread out routes in app.ts in a single index.routes.ts file.
+  * This makes app.ts less cluttered, enforces separation of concerns and makes the overall project structure more readable.
+* Added versioning to each route as a good practice of keeping the app expandable and open to potential future testing.

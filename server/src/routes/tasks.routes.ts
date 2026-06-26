@@ -4,6 +4,6 @@ import { postTasksController } from "../controllers/tasks.controllers.js";
 
 const router = Router();
 
-router.post('/projects/:projectId/tasks', authenticate, postTasksController)
+router.post('/tasks', authenticate, postTasksController)
 
 export default router;
