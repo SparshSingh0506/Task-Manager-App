@@ -97,3 +97,5 @@
 * Encapsulated spread out routes in app.ts in a single index.routes.ts file.
   * This makes app.ts less cluttered, enforces separation of concerns and makes the overall project structure more readable.
 * Added versioning to each route as a good practice of keeping the app expandable and open to potential future testing.
+* Updated projects & tasks zod schemas to be nullable instead of optional for some fields.
+  * This is because if something like description is not available, db should be storing null and not be dealing with undefined in case of optional.

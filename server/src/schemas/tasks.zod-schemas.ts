@@ -2,10 +2,10 @@ import { z } from "zod";
 
 export const tasksPostSchema = z.object({
   title: z.string().trim().max(100),
-  description: z.string().trim().optional(),
-  status: z.enum(["todo", "ongoing", "done"]).optional(),
-  priority: z.enum(["low", "medium", "high"]).optional(),
-  due_date: z.iso.date().optional(),
+  description: z.string().trim().nullable(),
+  status: z.enum(["todo", "ongoing", "done"]).nullable(),
+  priority: z.enum(["low", "medium", "high"]).nullable(),
+  due_date: z.iso.date().nullable(),
 });
 
-export type tasksPost = z.infer<typeof tasksPostSchema>;
+export type TasksPost = z.infer<typeof tasksPostSchema>;

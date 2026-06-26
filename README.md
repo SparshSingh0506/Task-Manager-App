@@ -1,1 +1,1 @@
-Basic task manager app with express js to understand backend concepts.
+Basic task manager app with express js to understand backend concepts, whilst trying to inculcate as many good practices and conventions of backend concepts and architectures.

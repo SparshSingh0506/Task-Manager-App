@@ -1,9 +1,15 @@
 import { Router } from "express";
+
 import { authenticate } from "../middlewares/authenticate.middleware.js";
-import { postTasksController } from "../controllers/tasks.controllers.js";
+
+import { validateRequest } from "../middlewares/validate-request.middleware.js";
+import { tasksPostSchema } from "../schemas/tasks.zod-schemas.js";
+
+import { postTaskController } from "../controllers/tasks.controllers.js";
+
 
 const router = Router();
 
-router.post('/tasks', authenticate, postTasksController)
+router.post('/tasks', authenticate, validateRequest(tasksPostSchema), postTaskController)
 
 export default router;
