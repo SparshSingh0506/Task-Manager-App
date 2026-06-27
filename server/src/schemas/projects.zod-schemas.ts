@@ -5,4 +5,5 @@ export const projectsPostSchema = z.object({
   description: z.string().trim().nullable()
 });
 
-export type ProjectsPost = z.infer<typeof projectsPostSchema>;
+export type ProjectsPostSchema = z.infer<typeof projectsPostSchema>;
+export type CreateProjectInput = {userId: string} & ProjectsPostSchema;

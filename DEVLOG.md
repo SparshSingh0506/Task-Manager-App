@@ -99,3 +99,20 @@
 * Added versioning to each route as a good practice of keeping the app expandable and open to potential future testing.
 * Updated projects & tasks zod schemas to be nullable instead of optional for some fields.
   * This is because if something like description is not available, db should be storing null and not be dealing with undefined in case of optional.
+
+## DAY 15
+* Cleaned project service and controller functions by augmenting userId type directly from the zod infertype into one single CreatePostInput type under the controller itself as a standard practice of designing backend architecture and keeping the service input clean.
+  * Also implemented the similar for task service and controller functions too, keeping the structure clean and concerns written where they belong.
+* Took a while to grasp the createTask query in depth, as had to deal with userId and projectId verification before inserting task.
+* Chose to do both verification and insertion in a single query at the repo layer for creating task.
+  * Reason - To keep one query for one request, instead of first checking if userId and projectId are matched in one query, and if valid, then performing the second query to insert task into db. (In the service layer)
+  * Gain - This would reduce network calls to db for every request by half, improving performance. Also learnt a new way of inserting into table with the SELECT statement.
+* Improved few past written project functions' code
+* Updated post tasks zod schema from nullable to have .nullish().transform(val => val ?? null).
+  * Problem - Previously having .nullable() in the zod schema explicitly required all properties to be passed as null in the json request body from the client, introducing uneccesary extra payload to travel over the bandwidth.
+  * What it does - if req body property as per schema is undefined in the payload, the validation middleware transforms it to be null.
+  * Gain - This allows the json request body to have undefined fields request from the client without causing zod error or disputing with the DB records that must have null while also reducing the payload size, keeping only what is necessary.
+* Ran into a bug where req.params.projectId was beind read undefined (Found through hectic console logs, wish to solve such issues in debugger in the future when i learn it.)
+  * Issue - had previously set up index.routes.ts that contained '/projects/:projectId' and tasks.routes.ts containing '/tasks', and trying to read url.params.projectId under /tasks caused it to not find it and hence js marking it undefined.
+  * Fix - enabled mergeParams in the tasksRouter that allowed reading of parent projectId from the inner router as well.
+  * Result - Succesfully tested afterwards, and the task was correctly inserted to the db.

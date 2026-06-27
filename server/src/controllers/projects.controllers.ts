@@ -7,14 +7,13 @@ import {
   getProjectByIdService 
 } from "../services/projects.services.js";
 
-import type { CreateProjectInput } from "../types/dbOperations.interfaces.js";
+import type { CreateProjectInput } from "../schemas/projects.zod-schemas.js";
 
 
 export const postProjectController = async (req: Request, res: Response) => {
   const createProjectInput: CreateProjectInput = {
-    user_id: req.userId,
-    title: req.body.title,
-    description: req.body.description
+    userId: req.userId,
+    ...req.body 
   };
 
   try {

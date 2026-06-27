@@ -8,7 +8,7 @@ import { tasksPostSchema } from "../schemas/tasks.zod-schemas.js";
 import { postTaskController } from "../controllers/tasks.controllers.js";
 
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 router.post('/tasks', authenticate, validateRequest(tasksPostSchema), postTaskController)
 

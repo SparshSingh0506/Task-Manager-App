@@ -1,10 +1,12 @@
 import { db } from "../config/db.config.js";
-import type { CreateProjectInput } from "../types/dbOperations.interfaces.js";
+import type { CreateProjectInput } from "../schemas/projects.zod-schemas.js";
 import type { Project } from "../types/schema.interfaces.js";
 
-type CreatedProject = Pick<Project, "id" | "user_id" | "title" | "description" | "created_at">
 
-export const createProject = async ({ user_id, title, description }: CreateProjectInput): Promise<CreatedProject> => {
+
+export const createProject = async (createProjectInput: CreateProjectInput): Promise<Project> => {
+  const { userId, title, description } = createProjectInput;
+
   const result = await db.query(
     `INSERT INTO projects (
         user_id,
@@ -12,16 +14,11 @@ export const createProject = async ({ user_id, title, description }: CreateProje
         description
       )
       VALUES ($1, $2, $3)
-      RETURNING
-        id,
-        user_id,
-        title,
-        description,
-        created_at`
-    , [user_id, title, description]
+      RETURNING *`
+    , [userId, title, description]
   );
 
-  return result.rows[0] as CreatedProject;
+  return result.rows[0] as Project;
 }
 
 
@@ -49,7 +46,7 @@ export const deleteProjectById = async (userId: string, projectId: string): Prom
     , [userId, projectId]
   );
 
-  return result.rows[0] as DeletedProject;
+  return result.rows[0] as DeletedProject; // TODO!!!! MAKE THIS GENERIC and do summarized returning in the service layer!
 }
 
 
@@ -60,5 +57,5 @@ export const getProjectById = async (userId: string, projectId: string): Promise
     AND id = $2`
   , [userId, projectId])
 
-  return result.rows[0];
+  return result.rows[0] as Project;
 }

@@ -1,4 +1,4 @@
-import type { CreateProjectInput } from "../types/dbOperations.interfaces.js";
+import type { CreateProjectInput } from "../schemas/projects.zod-schemas.js";
 import { createProject, getAllProjectsByUserId, deleteProjectById, getProjectById } from "../repositories/projects.repository.js";
 
 export const createProjectService = async (createProjectInput: CreateProjectInput) => {
@@ -9,9 +9,9 @@ export const createProjectService = async (createProjectInput: CreateProjectInpu
 
 export const getAllProjectsService = async (userId: string) => {
   const allProjects = await getAllProjectsByUserId(userId);
-  const allSummarizedProjects = allProjects.map(({id, title, description, updated_at}) => ({id, title, description, updated_at}));
+  const allProjectsSummarized = allProjects.map(({id, title, description, updated_at}) => ({id, title, description, updated_at}));
 
-  return allSummarizedProjects;
+  return allProjectsSummarized;
 }
 
 
