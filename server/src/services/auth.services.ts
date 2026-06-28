@@ -3,29 +3,28 @@ import 'dotenv/config';
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import type { UserRegistration, UserLogin } from "../schemas/auth.zod-schemas.js";
+import type { UserRegistrationInput, UserLoginInput } from "../schemas/auth.zod-schemas.js";
 
-import { findUserByEmail, createUser } from "../repositories/users.repository.js";
+import { getUserByEmail, createUser } from "../repositories/users.repository.js";
 
 
-export const registerUserService = async ({ username, email, password }: UserRegistration) => {
-  // check user already resgistered by email
-  const existingUser = await findUserByEmail(email);
+export const registerUserService = async ({ username, email, password }: UserRegistrationInput) => {
+  // check if user is already resgistered by email
+  const existingUser = await getUserByEmail(email);
 
   if (existingUser) throw new Error("this email already exists!");
 
   // hash password
-  const password_hash = await bcrypt.hash(password, 10);
+  const passwordHash = await bcrypt.hash(password, 10);
 
   // insert in db
-  return await createUser({ username, email, password_hash });
+  return await createUser({ username, email, passwordHash });
 }
 
 
-
-export const loginUserService = async ({ email, password }: UserLogin) => {
+export const loginUserService = async ({ email, password }: UserLoginInput) => {
   // check user exists by email
-  const foundUser = await findUserByEmail(email);
+  const foundUser = await getUserByEmail(email);
   if (!foundUser) throw new Error("Invalid Credentials");
 
   // check password

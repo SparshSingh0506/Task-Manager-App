@@ -4,7 +4,7 @@ import { registerUserService } from "../services/auth.services.js";
 import { loginUserService } from "../services/auth.services.js";
 
 
-export const registerController = async (req: Request, res: Response) => {
+export const registerUserController = async (req: Request, res: Response) => {
   try {
     const createdUserDetails = await registerUserService(req.body);
 
@@ -25,7 +25,7 @@ export const registerController = async (req: Request, res: Response) => {
 }
 
 
-export const loginController = async (req: Request, res: Response) => {
+export const loginUserController = async (req: Request, res: Response) => {
   try {
     const accessToken = await loginUserService(req.body);
 
