@@ -116,3 +116,11 @@
   * Issue - had previously set up index.routes.ts that contained '/projects/:projectId' and tasks.routes.ts containing '/tasks', and trying to read url.params.projectId under /tasks caused it to not find it and hence js marking it undefined.
   * Fix - enabled mergeParams in the tasksRouter that allowed reading of parent projectId from the inner router as well.
   * Result - Succesfully tested afterwards, and the task was correctly inserted to the db.
+
+## DAY 16
+* Cleaned repository layer functions by making separate and clear variables for query and values and then passing them in db.query().
+    * Gain - This improves readabilty and keeps code neater.
+* Implement GET /tasks to get list of all tasks
+* Removed summarizing project details in the created task details.
+  * Reason - Frontend does not exist yet, so it does not make sense currently to return filtered values by default, will update as frontend in future demands.
+* To do for later - work on properly throwing error in project service functions, and possible also learn to implement a global error handler as i am noticing redundant code for error try and catch.
