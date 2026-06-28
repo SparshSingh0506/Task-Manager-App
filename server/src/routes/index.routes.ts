@@ -9,6 +9,6 @@ export const router = Router();
 router.use('/auth', authRoutes);
 
 router.use('/projects', projectsRoutes);
-router.use('/projects/:projectId', tasksRoutes);
+router.use('/projects/:projectId/tasks', tasksRoutes);
 
 export default router;

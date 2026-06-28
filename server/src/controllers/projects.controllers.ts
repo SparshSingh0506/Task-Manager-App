@@ -38,11 +38,11 @@ export const postProjectController = async (req: Request, res: Response) => {
 
 export const getAllProjectsController = async (req: Request, res: Response) => {
   try {
-    const allSummarizedProducts = await getAllProjectsService(req.userId);
+    const summarizedProducts = await getAllProjectsService(req.userId);
 
     return res.status(200).json({
-      message: "All Projects' summary fetched.",
-      projects: allSummarizedProducts
+      message: "All Projects' summary retrieved.",
+      projects: summarizedProducts
     })
   }
 
@@ -50,7 +50,7 @@ export const getAllProjectsController = async (req: Request, res: Response) => {
     console.log(error);
 
     return res.status(400).json({
-      message: "Failed to fetch Project.",
+      message: "Failed to retrieve Project.",
       error: error
     })
   }

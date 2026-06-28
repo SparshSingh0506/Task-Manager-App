@@ -1,17 +1,15 @@
 import type { CreateProjectInput } from "../schemas/projects.zod-schemas.js";
 import { createProject, getAllProjectsByUserId, deleteProjectById, getProjectById } from "../repositories/projects.repository.js";
 
+
+// no business logic here yet, but keeping it open for future scaling
 export const createProjectService = async (createProjectInput: CreateProjectInput) => {
-  // no business logic here yet, but keeping it open for future scaling
   return await createProject(createProjectInput);
 }
 
 
 export const getAllProjectsService = async (userId: string) => {
-  const allProjects = await getAllProjectsByUserId(userId);
-  const allProjectsSummarized = allProjects.map(({id, title, description, updated_at}) => ({id, title, description, updated_at}));
-
-  return allProjectsSummarized;
+  return await getAllProjectsByUserId(userId);
 }
 
 
