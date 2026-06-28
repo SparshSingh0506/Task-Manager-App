@@ -124,3 +124,4 @@
 * Removed summarizing project details in the created task details.
   * Reason - Frontend does not exist yet, so it does not make sense currently to return filtered values by default, will update as frontend in future demands.
 * To do for later - work on properly throwing error in project service functions, and possible also learn to implement a global error handler as i am noticing redundant code for error try and catch.
+* Uncluttered some types made eariler for user auth and made them cleaner.
