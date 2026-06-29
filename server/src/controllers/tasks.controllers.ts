@@ -1,11 +1,11 @@
 import type { Request, Response } from "express";
 import { createTaskService, getAllTasksService } from "../services/tasks.services.js";
-import type { CreateTaskInput, TasksPostSchema } from "../schemas/tasks.zod-schemas.js";
+import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
 
 export const postTaskController = async (req: Request, res: Response) => {
 
-  const CreateTaskInput: CreateTaskInput = { 
-    userId: req.userId, 
+  const CreateTaskInput: CreateTaskInput = {
+    userId: req.userId,
     projectId: req.params.projectId,
     ...req.body
   };
@@ -20,10 +20,10 @@ export const postTaskController = async (req: Request, res: Response) => {
   }
 
   catch (error) {
-    console.log(error);
+    console.error(error);
 
-      res.status(400).json({
-      message: "Failed to create task.",
+    res.status(400).json({
+      message: error instanceof Error ? error.message : "Something went wrong"
     })
   }
 }
@@ -46,11 +46,11 @@ export const getAllTasksController = async (req: Request, res: Response) => {
     })
   }
 
-  catch(error) {
-    console.log(error);
+  catch (error) {
+    console.error(error);
 
-      res.status(400).json({
-      message: "Failed to retrieve task.",
+    res.status(400).json({
+      message: error instanceof Error ? error.message : "Something went wrong"
     })
   }
 }

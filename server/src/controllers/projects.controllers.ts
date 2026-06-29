@@ -26,11 +26,10 @@ export const postProjectController = async (req: Request, res: Response) => {
   }
 
   catch (error) {
-    console.log(error);
+    console.error(error);
 
     return res.status(400).json({
       message: "Failed to create Project.",
-      error: error
     })
   }
 }
@@ -47,11 +46,10 @@ export const getAllProjectsController = async (req: Request, res: Response) => {
   }
 
   catch (error) {
-    console.log(error);
+    console.error(error);
 
     return res.status(400).json({
       message: "Failed to retrieve Project.",
-      error: error
     })
   }
 }
@@ -60,12 +58,6 @@ export const getAllProjectsController = async (req: Request, res: Response) => {
 export const deleteProjectController = async (req: Request, res: Response) => {
   const userId = req.userId;
   const projectId = req.params.projectId; 
-
-  if (!projectId) {
-    return res.status(400).json({
-      message: "project id not provided.",
-    })
-  }
 
   try {
     const deletedProjectDetails = await deleteProjectService(userId, projectId as string);
@@ -78,7 +70,7 @@ export const deleteProjectController = async (req: Request, res: Response) => {
   }
 
   catch (error) {
-    console.log(error);
+    console.error(error);
 
     return res.status(400).json({
       message: "ProjectId not found.",
@@ -107,7 +99,7 @@ export const getProjectByIdController = async (req: Request, res: Response) => {
   }
 
   catch(error) {
-    console.log(error);
+    console.error(error);
 
     return res.status(400).json({
       message: "ProjectId not found.",

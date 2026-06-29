@@ -3,7 +3,7 @@ import { db } from "../config/db.config.js";
 import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
 import type { Task } from "../types/schema.interfaces.js";
 
-export const createTask = async (createTaskInput: CreateTaskInput): Promise<Task | null> => {
+export const createTask = async (createTaskInput: CreateTaskInput): Promise<Task> => {
   const { 
     userId,
     projectId,
@@ -46,15 +46,15 @@ export const createTask = async (createTaskInput: CreateTaskInput): Promise<Task
   
   const values = [userId, projectId, title, description, status, priority, due_date]
 
-  const result = await db.query(query, values)
+  const result = await db.query<Task>(query, values)
   // a little confusing query O.o | Select is executed before insert, FROM projects only returns p.id, $3...$7 are treated as constants not taken from projects table.
   // However, having both userId & projectId check in one query saves extra queries to the db to first check for valid user, then valid project.
 
-  return result.rows[0] as Task ?? null;
+  return result.rows[0]!;
 }
 
 
-export const getAllTasksByUserId = async (userId: string, projectId: string): Promise<Task[] | null> => {
+export const getAllTasksByUserId = async (userId: string, projectId: string): Promise<Task[]> => {
   const query = 
     `SELECT t.*
     FROM 
@@ -67,9 +67,7 @@ export const getAllTasksByUserId = async (userId: string, projectId: string): Pr
 
   const values = [userId, projectId];
 
-  const result = await db.query(query, values);
+  const result = await db.query<Task>(query, values);
 
-  const rows = result.rows;
-  
-  return (rows.length !== 0) ? rows as Task[] : null;
+  return result.rows;
 }

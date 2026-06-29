@@ -3,21 +3,21 @@ import { createProject, getAllProjectsByUserId, deleteProjectById, getProjectByI
 
 
 // no business logic here yet, but keeping it open for future scaling
-export const createProjectService = async (createProjectInput: CreateProjectInput) => {
-  return await createProject(createProjectInput);
+export const createProjectService = (createProjectInput: CreateProjectInput) => {
+  return createProject(createProjectInput);
 }
 
 
-export const getAllProjectsService = async (userId: string) => {
-  return await getAllProjectsByUserId(userId);
+export const getAllProjectsService = (userId: string) => {
+  return getAllProjectsByUserId(userId);
 }
 
 
-export const deleteProjectService = async (userId: string, projectId: string) => {
-  return await deleteProjectById(userId, projectId);
+export const deleteProjectService = (userId: string, projectId: string) => {
+  return deleteProjectById(userId, projectId);
 }
 
 
-export const getProjectByIdService = async (userId: string, project_id: string) => {
-  return await getProjectById(userId, project_id); // not found error handled at controller
+export const getProjectByIdService = (userId: string, project_id: string) => {
+  return getProjectById(userId, project_id); 
 }

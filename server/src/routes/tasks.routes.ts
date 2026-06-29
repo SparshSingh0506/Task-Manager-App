@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { authenticate } from "../middlewares/authenticate.middleware.js";
 
-import { validateRequest } from "../middlewares/validate-request.middleware.js";
+import { validateRequest } from "../middlewares/validate-requests.middleware.js";
 import { tasksPostSchema } from "../schemas/tasks.zod-schemas.js";
 
 import { getAllTasksController, postTaskController } from "../controllers/tasks.controllers.js";

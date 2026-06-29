@@ -17,9 +17,10 @@ export const createProject = async (createProjectInput: CreateProjectInput): Pro
 
   const values = [userId, title, description];
 
-  const result = await db.query(query, values);
+  const result = await db.query<Project>(query, values);
 
-  return result.rows[0] as Project;
+  // structurally guranteed from db to return one row or either throw error if returning fails, so null is not possible here
+  return result.rows[0]!;
 }
 
 
@@ -30,33 +31,28 @@ export const getAllProjectsByUserId = async (userId: string): Promise<Project[]>
 
   const values = [userId];
 
-  const result = await db.query(query, values);
-  // return all from repo layer, and filter required data in service layer.
+  const result = await db.query<Project>(query, values);
 
-  return result.rows as Project[];
+  return result.rows;
 }
 
 
-type DeletedProject = Pick<Project, "id" | "user_id" | "title" | "description">
-export const deleteProjectById = async (userId: string, projectId: string): Promise<DeletedProject> => {
+export const deleteProjectById = async (userId: string, projectId: string): Promise<Project | null> => {
   const query =
     `DELETE FROM projects 
     WHERE user_id = $1 
     AND id = $2
-    RETURNING
-      id,
-      user_id,
-      title,
-      description`;
+    RETURNING *`;
+    //db level check for authorization of user to delete a project.
 
-  const values = [userId, projectId];
-  const result = await db.query(query, values );//db level check for authorization of user to delete a project.
+    const values = [userId, projectId];
+    const result = await db.query<Project>(query, values );
 
-  return result.rows[0] as DeletedProject; // TODO!!!! MAKE THIS GENERIC and do summarized returning in the service layer!
+  return result.rows[0] ?? null;
 }
 
 
-export const getProjectById = async (userId: string, projectId: string): Promise<Project> => {
+export const getProjectById = async (userId: string, projectId: string): Promise<Project | null> => {
   const query = 
     `SELECT * FROM
     projects WHERE user_id = $1
@@ -64,7 +60,7 @@ export const getProjectById = async (userId: string, projectId: string): Promise
   
   const values = [userId, projectId];
 
-  const result = await db.query(query, values);
+  const result = await db.query<Project>(query, values);
 
-  return result.rows[0] as Project;
+  return result.rows[0] ?? null;
 }
