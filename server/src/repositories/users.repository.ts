@@ -9,9 +9,8 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
   const values = [email];
 
   const result = await db.query(query, values);
-  // no string interpolation to prevent SQL injection! like ' OR 1=1 -- which can provide unauthorized access: SELECT * FROM users WHERE email = '' OR 1=1 --'
 
-  return result.rows[0] ?? null; // email is always unique
+  return result.rows[0] ?? null;
 }
 
 
@@ -36,11 +35,9 @@ export const createUser = async (createUserInput: CreateUserInput): Promise<Crea
 
   const values = [username, email, passwordHash]
 
-  const result = await db.query(query, values);
+  const result = await db.query<CreatedUser>(query, values);
 
-  // pg can throw error if user already exists.
-  // although unique user is checked in auth service, but due to race condition if same email is posted at the same time, error can occur.
-  return result.rows[0] as CreatedUser;
+  return result.rows[0]!;
 }
 
 

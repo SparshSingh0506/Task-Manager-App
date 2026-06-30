@@ -13,11 +13,25 @@ export const getAllProjectsService = (userId: string) => {
 }
 
 
-export const deleteProjectService = (userId: string, projectId: string) => {
-  return deleteProjectById(userId, projectId);
+export const deleteProjectService = async (userId: string, projectId: string) => {
+  const deletedProjectDetails = await deleteProjectById(userId, projectId);
+
+  if (!deletedProjectDetails) throw {
+    status: 404,
+    message: "Project not found."
+  }
+
+  return deletedProjectDetails;
 }
 
 
-export const getProjectByIdService = (userId: string, project_id: string) => {
-  return getProjectById(userId, project_id); 
+export const getProjectByIdService = async (userId: string, project_id: string) => {
+  const projectDetails = await getProjectById(userId, project_id);
+
+  if (!projectDetails) throw {
+    status: 404,
+    message: "Project not found."
+  }
+
+  return projectDetails;
 }

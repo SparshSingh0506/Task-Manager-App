@@ -1,9 +1,8 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { createTaskService, getAllTasksService } from "../services/tasks.services.js";
 import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
 
-export const postTaskController = async (req: Request, res: Response) => {
-
+export const postTaskController = async (req: Request, res: Response, next: NextFunction) => {
   const CreateTaskInput: CreateTaskInput = {
     userId: req.userId,
     projectId: req.params.projectId,
@@ -14,43 +13,34 @@ export const postTaskController = async (req: Request, res: Response) => {
     const createdTaskDetails = await createTaskService(CreateTaskInput);
 
     res.status(201).json({
-      message: "Task succesfully created!",
+      message: "Task created succesfully.",
       taskDetail: createdTaskDetails
     })
   }
 
-  catch (error) {
-    console.error(error);
+  catch (error: any) {
+    error.status = 400;
+    error.message = "Task creation failed.";
 
-    res.status(400).json({
-      message: error instanceof Error ? error.message : "Something went wrong"
-    })
+    next(error);
   }
 }
 
 
-export const getAllTasksController = async (req: Request, res: Response) => {
+export const getAllTasksController = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.userId;
   const projectId = req.params.projectId;
 
-  if (!projectId) return res.status(400).json({
-    message: "project id not found."
-  })
-
   try {
-    const retrievedTasks = await getAllTasksService(userId, projectId as string);
+    const allTasksDetails = await getAllTasksService(userId, projectId as string);
 
     res.status(200).json({
-      message: "Task succesfully created!",
-      tasks: retrievedTasks
+      message: "All tasks retrieved successfully.",
+      tasks: allTasksDetails
     })
   }
 
-  catch (error) {
-    console.error(error);
-
-    res.status(400).json({
-      message: error instanceof Error ? error.message : "Something went wrong"
-    })
+  catch (error: any) {
+    next(error);
   }
 }
