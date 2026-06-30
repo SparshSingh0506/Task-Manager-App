@@ -46,14 +46,33 @@ export const getAllProjectsController = async (req: Request, res: Response, next
 }
 
 
-export const deleteProjectController = async (req: Request, res: Response, next: NextFunction) => {
+export const getProjectByIdController = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.userId;
-  const projectId = req.params.projectId; 
+  const projectId = req.params.projectId as string; 
   // no need to check projectId exists as it has to be present in the url, otherwise /projects/:projectId/tasks without projectId would lead to invalid route.
+  // not sure why TS is also defining type string[] for projectId when its impossible in url param, so using string type assertion as a work around.
 
   try {
-    const deletedProjectDetails = await deleteProjectService(userId, projectId as string);
-    // not sure why TS is also defining type string[] for projectId when its impossible in url param, so using string type assertion as a work around.
+    const projectDetails = await getProjectByIdService(userId, projectId);
+    
+    return res.status(200).json({
+      message: "Project retrieved successfully.",
+      projectDetails: projectDetails
+    })
+  }
+  
+  catch(error) {
+    next(error);
+  }
+}
+
+
+export const deleteProjectController = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.userId;
+  const projectId = req.params.projectId as string; 
+
+  try {
+    const deletedProjectDetails = await deleteProjectService(userId, projectId);
 
     return res.status(200).json({
       message: "Project deleted succesfully.",
@@ -62,25 +81,6 @@ export const deleteProjectController = async (req: Request, res: Response, next:
   }
 
   catch (error) {
-    next(error);
-  }
-}
-
-
-export const getProjectByIdController = async (req: Request, res: Response, next: NextFunction) => {
-  const userId = req.userId;
-  const projectId = req.params.projectId; 
-
-  try {
-    const project = await getProjectByIdService(userId, projectId as string);
-
-    return res.status(200).json({
-      message: "Project retrieved successfully.",
-      project: project
-    })
-  }
-
-  catch(error) {
     next(error);
   }
 }

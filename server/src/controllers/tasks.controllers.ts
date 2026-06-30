@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { createTaskService, getAllTasksService } from "../services/tasks.services.js";
+import { createTaskService, getAllTasksService, getTaskByIdService } from "../services/tasks.services.js";
 import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
 
 export const postTaskController = async (req: Request, res: Response, next: NextFunction) => {
@@ -29,10 +29,10 @@ export const postTaskController = async (req: Request, res: Response, next: Next
 
 export const getAllTasksController = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.userId;
-  const projectId = req.params.projectId;
+  const projectId = req.params.projectId as string;
 
   try {
-    const allTasksDetails = await getAllTasksService(userId, projectId as string);
+    const allTasksDetails = await getAllTasksService(userId, projectId);
 
     res.status(200).json({
       message: "All tasks retrieved successfully.",
@@ -41,6 +41,26 @@ export const getAllTasksController = async (req: Request, res: Response, next: N
   }
 
   catch (error: any) {
+    next(error);
+  }
+}
+
+
+export const getTaskByIdController = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.userId;
+  const projectId = req.params.projectId as string;
+  const taskId = req.params.taskId as string;
+
+  try {
+    const taskDetails = await getTaskByIdService(userId, projectId, taskId);
+
+    res.status(200).json({
+      message: "Task retrieved successfully.",
+      taskDetails: taskDetails
+    })
+  }
+
+  catch(error: any) {
     next(error);
   }
 }

@@ -57,3 +57,21 @@ export const getAllTasksByProjectId = async (projectId: string): Promise<Task[]>
 
   return result.rows;
 }
+
+
+export const getTaskById = async (projectId: string, taskId: string): Promise<Task | null> => {
+  const query = `
+    SELECT * FROM tasks
+    WHERE 
+      project_id = $1
+      AND
+      id = $2
+  `;
+
+  // project id is already validated before
+  const values = [projectId, taskId];
+
+  const result = await db.query(query, values);
+
+  return result.rows[0] ?? null;
+}
