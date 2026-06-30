@@ -125,3 +125,23 @@
   * Reason - Frontend does not exist yet, so it does not make sense currently to return filtered values by default, will update as frontend in future demands.
 * To do for later - work on properly throwing error in project service functions, and possible also learn to implement a global error handler as i am noticing redundant code for error try and catch.
 * Uncluttered some types made eariler for user auth and made them cleaner.
+
+## DAY 17
+* Refactored some previously written code for projects service & repository, aligning it with better industry practices.
+* Removed async await from service layer of projects and task.
+  * Reason - Currently, service layers is just a pipe from controller to repository with not business logic yet, so extra async await is redundant, simply return the promise from repo to controller layer.
+* Implemented global error handler.
+  * Reason - Every controller was repeating the same error response with just different messages, so it made sense to make error handler a global middleware to pass all messages there are enforce DRY prinicple.
+
+## DAY 18
+* Cleaned error messages and made them consistent in Resource - Action - Status style.
+* Decided to use two queries instead of one for getting all tasks as first validate projects existence and then access task as, Reasons:
+  * In contrast againt my previous decision of using single sql query for both user and project check before retrieving tasks, having two queries allowed me to segregate the result that might come from either 1. user not having the project, 2. project not having the task or project not existing at all.
+  * The single query before abstracted this and was only returning an empty array which was amiguous to decide whether it was empty due to project not existing or task not existing.
+  * Also, since GET operation does not modify resources, race conditions do not occur as they might in POST, DELETE or PUT operations, which should ideally be done in one single atomic query to enforce consistent modifications.
+  * Gain - This made the get all tasks query much simpler and readable as it now only validates for project.
+* Cleaned up all controllers of users, projects & tasks so far that were returning their own res.status().json() in catch blocks, and moved them all to the global error handler previously created.
+  * Gain - This cleaned up the code and made controllers more generic. However I am noticing that using error extending classes can give a clearer intent of the error and also my current method of throwing an object is a bad practice because of its vagueness and code redundancy.
+* Implemented GET /projects/:projectId/tasks/:taskId route.
+  * Choices - Between either opting for 1. both prject & task in url params or 2. only GET /tasks/:taskId and passing projectId in req.body
+  * Decision - Chose the former approach as the resource route is only 4 levels deep, which I consider okay as hierarchy is clearer, although it may be messy to some. However, the later approach is also very clean as we can keep only the primary resource in the url param and pass rest of the parent resources through the req.body.
