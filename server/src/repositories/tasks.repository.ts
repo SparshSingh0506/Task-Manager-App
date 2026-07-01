@@ -3,6 +3,7 @@ import { db } from "../config/db.config.js";
 import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
 import type { Task } from "../types/schema.interfaces.js";
 
+
 export const createTask = async (createTaskInput: CreateTaskInput): Promise<Task | null> => {
   const { 
     userId,
@@ -71,7 +72,25 @@ export const getTaskById = async (projectId: string, taskId: string): Promise<Ta
   // project id is already validated before
   const values = [projectId, taskId];
 
-  const result = await db.query(query, values);
+  const result = await db.query<Task>(query, values);
+
+  return result.rows[0] ?? null;
+}
+
+
+export const deleteTask = async (projectId: string, taskId: string): Promise<Task | null> => {
+  const query = `
+    DELETE FROM tasks
+    WHERE
+      project_id = $1
+      AND
+      id = $2
+    RETURNING *
+  `;
+
+  const values = [projectId, taskId];
+
+  const result = await db.query<Task>(query, values);
 
   return result.rows[0] ?? null;
 }

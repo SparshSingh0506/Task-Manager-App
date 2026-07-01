@@ -1,5 +1,5 @@
 import { getProjectById } from "../repositories/projects.repository.js";
-import { createTask, getAllTasksByProjectId, getTaskById } from "../repositories/tasks.repository.js";
+import { createTask, deleteTask, getAllTasksByProjectId, getTaskById } from "../repositories/tasks.repository.js";
 import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
 
 
@@ -44,4 +44,23 @@ export const getTaskByIdService = async (userId: string, projectId: string, task
   }
 
   return task;
+}
+
+
+export const deleteTaskService = async (userId: string, projectId: string, taskId: string) => {
+  const project = await getProjectById(userId, projectId);
+
+  if (!project) throw {
+    status: 404,
+    message: "Project not found."
+  }
+
+  const deletedTask = await deleteTask(projectId, taskId);
+
+  if (!deletedTask) throw {
+    status: 404,
+    message: "Task not found."
+  }
+
+  return deletedTask;
 }

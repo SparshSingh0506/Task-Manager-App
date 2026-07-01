@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { createTaskService, getAllTasksService, getTaskByIdService } from "../services/tasks.services.js";
+import { createTaskService, deleteTaskService, getAllTasksService, getTaskByIdService } from "../services/tasks.services.js";
 import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
 
 export const postTaskController = async (req: Request, res: Response, next: NextFunction) => {
@@ -57,6 +57,26 @@ export const getTaskByIdController = async (req: Request, res: Response, next: N
     res.status(200).json({
       message: "Task retrieved successfully.",
       taskDetails: taskDetails
+    })
+  }
+
+  catch(error: any) {
+    next(error);
+  }
+}
+
+
+export const deleteTaskController = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.userId;
+  const projectId = req.params.projectId as string;
+  const taskId = req.params.taskId as string;
+
+  try {
+    const deletedTaskDetails = await deleteTaskService(userId, projectId, taskId);
+
+    res.status(200).json({
+      message: "Task deleted successfully.",
+      taskDetails: deletedTaskDetails
     })
   }
 

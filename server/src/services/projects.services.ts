@@ -1,5 +1,5 @@
 import type { CreateProjectInput } from "../schemas/projects.zod-schemas.js";
-import { createProject, getAllProjectsByUserId, deleteProjectById, getProjectById } from "../repositories/projects.repository.js";
+import { createProject, getAllProjectsByUserId, deleteProject, getProjectById } from "../repositories/projects.repository.js";
 
 
 // no business logic here yet, but keeping it open for future scaling
@@ -26,7 +26,7 @@ export const getProjectByIdService = async (userId: string, projectId: string) =
 
 
 export const deleteProjectService = async (userId: string, projectId: string) => {
-  const deletedProjectDetails = await deleteProjectById(userId, projectId);
+  const deletedProjectDetails = await deleteProject(userId, projectId);
 
   if (!deletedProjectDetails) throw {
     status: 404,

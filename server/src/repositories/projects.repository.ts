@@ -56,7 +56,7 @@ export const getProjectById = async (userId: string, projectId: string): Promise
 }
 
 
-export const deleteProjectById = async (userId: string, projectId: string): Promise<Project | null> => {
+export const deleteProject = async (userId: string, projectId: string): Promise<Project | null> => {
   const query = `
   DELETE FROM projects 
     WHERE 
