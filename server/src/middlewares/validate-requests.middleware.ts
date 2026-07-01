@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import type { ZodObject } from "zod";
+import {z} from "zod"
 
 
 export const validateRequest = (schema: ZodObject) => {
@@ -7,10 +8,10 @@ export const validateRequest = (schema: ZodObject) => {
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
-      return res.status(400).json({
-        message: "Invalid request body",
-        error: result.error.format
-      });
+      throw {
+        status: 400,
+        message: z.prettifyError(result.error)
+      }
     }
 
     req.body = result.data;

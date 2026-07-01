@@ -7,7 +7,6 @@ import tasksRoutes from "./tasks.routes.js"
 export const router = Router();
 
 router.use('/auth', authRoutes);
-
 router.use('/projects', projectsRoutes);
 router.use('/projects/:projectId/tasks', tasksRoutes);
 

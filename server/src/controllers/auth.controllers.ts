@@ -25,7 +25,7 @@ export const loginUserController = async (req: Request, res: Response, next: Nex
     const accessToken = await loginUserService(req.body);
 
     res.status(200).json({
-      message: "accessToken successfully generated and sent.",
+      message: "User login successfull.",
       accessToken: accessToken
     });
   }
