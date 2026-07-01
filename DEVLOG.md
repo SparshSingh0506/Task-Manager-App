@@ -145,3 +145,7 @@
 * Implemented GET /projects/:projectId/tasks/:taskId route.
   * Choices - Between either opting for 1. both prject & task in url params or 2. only GET /tasks/:taskId and passing projectId in req.body
   * Decision - Chose the former approach as the resource route is only 4 levels deep, which I consider okay as hierarchy is clearer, although it may be messy to some. However, the later approach is also very clean as we can keep only the primary resource in the url param and pass rest of the parent resources through the req.body.
+
+## DAY 19
+* Implemented delete task by id api end point.
+* Made zod error to route to global error handler.
