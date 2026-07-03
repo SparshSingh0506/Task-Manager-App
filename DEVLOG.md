@@ -149,3 +149,20 @@
 ## DAY 19
 * Implemented delete task by id api end point.
 * Made zod error to route to global error handler.
+
+## DAY 20
+* Improved zod schema for tasks, project, and user by adding violation messages and making post schemas strict to comply with the db schema and reject incomplete or undefined fields and also adding violation messages.
+* Added password min length check of 1 in login post schema.
+  * Reason - to not perform unnecessary rehashing and comparing with stored password by querying the db, as it is already known that password length of min(1) is impossible
+  * However, this also raises a question as to why not have the min password length check of login same as that of register?, as technically its impossible for any passwords below the register min length threshold to pass the check.
+    * Reason - to prevent information disclosure by not informing the client what the minimum length should be, enforcing security. It also prevents an upgradability trap, where in case if password min length is increased in future, old users wit password length 6 can still login.
+* Wrote foundational code for project patch, but the query for this one is going to be interesting as any field can be requested to be made dynamic, which must be made dynamic.
+
+## day 21
+* Designed a new zod schema for patch projects.
+  * Reason - I tried making it partial from post, but fundamentally, both are different operations, so chose to have a little redundancy over clever techniques.
+  * updated_at column updates at every patch query at the db level
+* Implemented patch sql query for projects.
+  * Approach - Zod is the firewall here of only accepting structurally correct data, which has been extracted as partial from the post schema, refined to never have empty payload. Then, once we have the updates object, we dynamically extract column names from it and inject them into sql.
+  * Also, since the columns are validated before hand through zod, its fine to inject the setClause string into the raw sql query.
+* Tested successfull path project api end point.
