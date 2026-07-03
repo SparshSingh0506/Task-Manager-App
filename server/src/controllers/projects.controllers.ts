@@ -1,11 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
-import type { CreateProjectInput } from "../schemas/projects.zod-schemas.js";
+import type { CreateProjectInput, PatchProjectSchema } from "../schemas/projects.zod-schemas.js";
 
 import { 
   createProjectService, 
   deleteProjectService, 
   getAllProjectsService, 
-  getProjectByIdService 
+  getProjectByIdService, 
+  patchProjectService
 } from "../services/projects.services.js";
 
 
@@ -77,6 +78,26 @@ export const deleteProjectController = async (req: Request, res: Response, next:
     return res.status(200).json({
       message: "Project deleted succesfully.",
       projectDetails: deletedProjectDetails
+    })
+  }
+
+  catch (error) {
+    next(error);
+  }
+}
+
+
+export const patchProjectController = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.userId;
+  const projectId = req.params.projectId as string; 
+  const updates: PatchProjectSchema = req.body;
+
+  try {
+    const patchedProjectDetails = await patchProjectService(userId, projectId, updates);
+
+    return res.status(200).json({
+      message: "Project updated succesfully.",
+      projectDetails: patchedProjectDetails
     })
   }
 

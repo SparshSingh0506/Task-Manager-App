@@ -46,7 +46,7 @@ export const getTaskByIdService = async (userId: string, projectId: string, task
   return task;
 }
 
-
+// REFACTOR!!!! BOUND TO RACE CONDITIONS DUE TO TWO CALLS!
 export const deleteTaskService = async (userId: string, projectId: string, taskId: string) => {
   const project = await getProjectById(userId, projectId);
 

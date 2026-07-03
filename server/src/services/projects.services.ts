@@ -1,5 +1,5 @@
-import type { CreateProjectInput } from "../schemas/projects.zod-schemas.js";
-import { createProject, getAllProjectsByUserId, deleteProject, getProjectById } from "../repositories/projects.repository.js";
+import type { CreateProjectInput, PatchProjectSchema } from "../schemas/projects.zod-schemas.js";
+import { createProject, getAllProjectsByUserId, deleteProject, getProjectById, updateProject } from "../repositories/projects.repository.js";
 
 
 // no business logic here yet, but keeping it open for future scaling
@@ -34,4 +34,16 @@ export const deleteProjectService = async (userId: string, projectId: string) =>
   }
 
   return deletedProjectDetails;
+}
+
+
+export const patchProjectService = async (userId: string, projectId: string, updates: PatchProjectSchema) => {
+  const patchedProjectDetails = await updateProject(userId, projectId, updates);
+
+  if (!patchedProjectDetails) throw {
+    status: 404,
+    message: "Project not found."
+  }
+
+  return patchedProjectDetails;
 }
