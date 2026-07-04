@@ -163,6 +163,11 @@
   * Reason - I tried making it partial from post, but fundamentally, both are different operations, so chose to have a little redundancy over clever techniques.
   * updated_at column updates at every patch query at the db level
 * Implemented patch sql query for projects.
-  * Approach - Zod is the firewall here of only accepting structurally correct data, which has been extracted as partial from the post schema, refined to never have empty payload. Then, once we have the updates object, we dynamically extract column names from it and inject them into sql.
+  * Approach - Zod is the firewall here of only accepting structurally correct data, that can never be empty and can not reach deeper layers. Then, once we have the updates object, we dynamically extract column names from it and inject them into sql.
   * Also, since the columns are validated before hand through zod, its fine to inject the setClause string into the raw sql query.
 * Tested successfull path project api end point.
+
+## day 22
+* Encapsulated the updates extraction in patch requests function
+  * Gain - This enforces the DRY principle as the same funcitonality will also be repeated for task and user patching.
+* Implemented task patch api end point.
