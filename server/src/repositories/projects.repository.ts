@@ -1,6 +1,7 @@
 import { db } from "../config/db.config.js";
 import type { CreateProjectInput, PatchProjectSchema } from "../schemas/projects.zod-schemas.js";
 import type { Project } from "../types/schema.interfaces.js";
+import { buildSetClause } from "../utils/patch-query-builder.util.js";
 
 
 export const createProject = async (createProjectInput: CreateProjectInput): Promise<Project> => {
@@ -75,14 +76,9 @@ export const deleteProject = async (userId: string, projectId: string): Promise<
 
 
 export const updateProject = async (userId: string, projectId: string, updates: PatchProjectSchema): Promise<Project | null> => {
-  // approach - dynamically extract column names and inject them into sql
-  const entries = Object.entries(updates);
+  const {setClause, values } = buildSetClause(updates);
   
-  const setClause = entries.map(([key, val], i) => `${key} = $${i + 1}`).join(', '); // eg - "title = $1, description = $2"
-  // this getting injected in query is safe as only trusted columns can ever come up to this point due to zod's validation earlier.
-
-  const values = entries.map(([key, val]) => val);
-  values.push(...[userId, projectId]);
+  values.push(...[userId, projectId]);  
 
   const n = values.length;
 
