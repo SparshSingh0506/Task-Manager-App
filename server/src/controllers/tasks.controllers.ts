@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import { createTaskService, deleteTaskService, getAllTasksService, getTaskByIdService } from "../services/tasks.services.js";
-import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
+import { createTaskService, deleteTaskService, getAllTasksService, getTaskByIdService, patchTaskService } from "../services/tasks.services.js";
+import type { CreateTaskInput, PatchTaskSchema } from "../schemas/tasks.zod-schemas.js";
 
 export const postTaskController = async (req: Request, res: Response, next: NextFunction) => {
   const CreateTaskInput: CreateTaskInput = {
@@ -81,6 +81,26 @@ export const deleteTaskController = async (req: Request, res: Response, next: Ne
   }
 
   catch(error: any) {
+    next(error);
+  }
+}
+
+
+export const patchTaskController = async (req: Request, res: Response, next: NextFunction) => {
+  const projectId = req.params.projectId as string; 
+  const taskId = req.params.taskId as string;
+  const updates: PatchTaskSchema = req.body;
+
+  try {
+    const patchedTaskDetails = await patchTaskService(projectId, taskId, updates);
+
+    return res.status(200).json({
+      message: "Task updated succesfully.",
+      projectDetails: patchedTaskDetails
+    })
+  }
+
+  catch (error) {
     next(error);
   }
 }

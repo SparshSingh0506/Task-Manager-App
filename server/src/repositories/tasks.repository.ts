@@ -1,11 +1,12 @@
 import { db } from "../config/db.config.js";
 
-import type { CreateTaskInput } from "../schemas/tasks.zod-schemas.js";
+import type { CreateTaskInput, PatchTaskSchema } from "../schemas/tasks.zod-schemas.js";
 import type { Task } from "../types/schema.interfaces.js";
+import { buildSetClause } from "../utils/patch-query-builder.util.js";
 
 
 export const createTask = async (createTaskInput: CreateTaskInput): Promise<Task | null> => {
-  const { 
+  const {
     userId,
     projectId,
     title,
@@ -37,7 +38,7 @@ export const createTask = async (createTaskInput: CreateTaskInput): Promise<Task
       p.id = $2
     RETURNING *
   `;
-  
+
   const values = [userId, projectId, title, description, status, priority, due_date]
 
   const result = await db.query<Task>(query, values)
@@ -91,6 +92,31 @@ export const deleteTask = async (projectId: string, taskId: string): Promise<Tas
   const values = [projectId, taskId];
 
   const result = await db.query<Task>(query, values);
+
+  return result.rows[0] ?? null;
+}
+
+
+export const updateTask = async (projectId: string, taskId: string, updates: PatchTaskSchema): Promise<Task | null> => {
+  const { setClause, values } = buildSetClause(updates);
+
+  values.push(...[projectId, taskId]);
+
+  const n = values.length;
+
+  const query = `
+    UPDATE tasks
+    SET 
+      ${setClause},
+      updated_at = NOW()
+    WHERE
+      project_id = $${n - 1}
+      AND
+      id = $${n}
+    RETURNING *
+  `;
+
+  const result = await db.query(query, values);
 
   return result.rows[0] ?? null;
 }

@@ -24,5 +24,10 @@ export const patchProjectSchema = z.object({
     .max(500, "Description must be under 500 characters.")
     .optional()
 })
+.strict()
+.refine(
+  data => Object.keys(data).length > 0,
+  "At least one field must be provided for update."
+);
 
 export type PatchProjectSchema = z.infer<typeof patchProjectSchema>;
