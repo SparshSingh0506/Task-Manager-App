@@ -168,6 +168,16 @@
 * Tested successfull path project api end point.
 
 ## day 22
-* Encapsulated the updates extraction in patch requests function
+* Encapsulated the updates extraction in patch requests function.
   * Gain - This enforces the DRY principle as the same funcitonality will also be repeated for task and user patching.
 * Implemented task patch api end point.
+
+## day 23
+* Implemented connect to db function to ensure db connection is established before the server starts listening to requests.
+  * Reason - This is a good practice to ensure that the server does not start accepting requests before the db connection is established, which would lead to errors and failed requests.
+
+## day 24
+* Implemented a new error class AppError that extends the Error class, and is used to throw errors in the service layer, which will be caught by the global error handler middleware.
+  * Reason - This allows for a more structured and clear way of throwing errors, as well as allowing for custom error messages and status codes to be passed along with the error.
+* Refined all previously thrown errors in the service layer to use the new AppError class, and removed all redundant error handling code from the controllers, as they will now be handled by the global error handler middleware.
+  * Gain - This makes the code cleaner and more maintainable, as well as allowing for more consistent error handling throughout the application.
