@@ -1,17 +1,34 @@
 import type { Request, Response, NextFunction } from "express";
+import { AppError } from "../utils/errors/errors.util.js";
 
-export const errorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
-  const status = error?.status ?? 500;
-  const message = error?.message ?? "Internal Server Error.";
+export const errorHandler = (error: unknown, req: Request, res: Response, next: NextFunction) => {
+  if (error instanceof AppError) {
 
-  const origin = (status >= 500) ? "Server": "Client";
+    console.error(
+      `[Client] ${error.status} ${req.method} ${req.originalUrl}`
+    );
+
+    console.error(error.stack);
+
+    return res.status(error.status).json({
+      message: error.message
+    });
+
+  }
 
   console.error(
-    `[${origin} Error] ${status}: ${message}
-    ${error.stack}`
+    `[Server] 500 ${req.method} ${req.originalUrl}`
   );
 
-  return res.status(status).json({
-    message: message,
-  })
+  if (error instanceof Error) {
+    console.error(error.stack);
+  } 
+  
+  else {
+    console.error(error);
+  }
+
+  return res.status(500).json({
+    message: "Internal Server Error."
+  });
 }

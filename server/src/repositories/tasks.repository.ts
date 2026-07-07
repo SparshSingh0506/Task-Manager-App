@@ -2,7 +2,7 @@ import { db } from "../config/db.config.js";
 
 import type { CreateTaskInput, PatchTaskSchema } from "../schemas/tasks.zod-schemas.js";
 import type { Task } from "../types/schema.interfaces.js";
-import { buildSetClause } from "../utils/patch-query-builder.util.js";
+import { buildSetClause } from "../utils/db/patch-query-builder.util.js";
 
 
 export const createTask = async (createTaskInput: CreateTaskInput): Promise<Task | null> => {

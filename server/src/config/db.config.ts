@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import pg from 'pg';
+import { AppError } from "../utils/errors/errors.util.js";
 
 const { Pool } = pg;
 
@@ -18,6 +19,6 @@ export const connectToDb = async () => {
   }
 
   catch(error) {
-    throw new Error(`[Error] Failed to connect to the database: ${error}`);
+    throw new AppError(500, `[Error] Failed to connect to the database: ${error}`);
   }
 }

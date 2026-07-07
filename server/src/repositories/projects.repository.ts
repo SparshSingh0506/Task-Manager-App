@@ -1,7 +1,7 @@
 import { db } from "../config/db.config.js";
 import type { CreateProjectInput, PatchProjectSchema } from "../schemas/projects.zod-schemas.js";
 import type { Project } from "../types/schema.interfaces.js";
-import { buildSetClause } from "../utils/patch-query-builder.util.js";
+import { buildSetClause } from "../utils/db/patch-query-builder.util.js";
 
 
 export const createProject = async (createProjectInput: CreateProjectInput): Promise<Project> => {

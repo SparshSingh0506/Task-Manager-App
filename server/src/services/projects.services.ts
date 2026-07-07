@@ -1,5 +1,6 @@
 import type { CreateProjectInput, PatchProjectSchema } from "../schemas/projects.zod-schemas.js";
 import { createProject, getAllProjectsByUserId, deleteProject, getProjectById, updateProject } from "../repositories/projects.repository.js";
+import { AppError } from "../utils/errors/errors.util.js";
 
 
 // no business logic here yet, but keeping it open for future scaling
@@ -16,22 +17,16 @@ export const getAllProjectsService = (userId: string) => {
 export const getProjectByIdService = async (userId: string, projectId: string) => {
   const projectDetails = await getProjectById(userId, projectId);
 
-  if (!projectDetails) throw {
-    status: 404,
-    message: "Project not found."
-  }
+  if (!projectDetails) throw new AppError(404, "Project not found.")
 
   return projectDetails;
-}
+} 
 
 
 export const deleteProjectService = async (userId: string, projectId: string) => {
   const deletedProjectDetails = await deleteProject(userId, projectId);
 
-  if (!deletedProjectDetails) throw {
-    status: 404,
-    message: "Project not found."
-  }
+  if (!deletedProjectDetails) throw new AppError(404, "Project not found.")
 
   return deletedProjectDetails;
 }
@@ -40,10 +35,7 @@ export const deleteProjectService = async (userId: string, projectId: string) =>
 export const patchProjectService = async (userId: string, projectId: string, updates: PatchProjectSchema) => {
   const patchedProjectDetails = await updateProject(userId, projectId, updates);
 
-  if (!patchedProjectDetails) throw {
-    status: 404,
-    message: "Project not found."
-  }
+  if (!patchedProjectDetails) throw new AppError(404, "Project not found.")
 
   return patchedProjectDetails;
 }
