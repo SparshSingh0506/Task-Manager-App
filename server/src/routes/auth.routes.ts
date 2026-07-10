@@ -11,3 +11,6 @@ router.post('/register', validateRequest(registerSchema), registerUserController
 router.post('/login', validateRequest(loginSchema), loginUserController);
 
 export default router;
+
+// POST api/v1/auth/register
+// POST api/v1/auth/login

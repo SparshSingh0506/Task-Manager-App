@@ -2,6 +2,7 @@ import 'dotenv/config';
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { authenticatePayloadSchema } from '../schemas/auth.zod-schemas.js';
+import { AppError } from '../utils/errors/errors.util.js';
 
 // this middleware shall be checked primarily for every request to this app's api end points.
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
@@ -40,10 +41,6 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
   }
 
   catch (error) {
-    console.log("Error during authenticate: ", error);
-
-    return res.status(401).json({
-      message: "Authentication failed."
-    });
+    throw new AppError(401, "Authentication failed");
   }
 }

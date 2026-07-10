@@ -22,5 +22,10 @@ router.get('/:taskId', authenticate, getTaskByIdController);
 router.delete('/:taskId', authenticate, deleteTaskController);
 router.patch('/:taskId', authenticate, validateRequest(patchTaskSchema), patchTaskController);
 
-
 export default router;
+
+// POST /api/v1/projects/:projectId/tasks
+// GET /api/v1/projects/:projectId/tasks
+// GET /api/v1/projects/:projectId/tasks/:taskId
+// DELETE /api/v1/projects/:projectId/tasks/:taskId
+// PATCH /api/v1/projects/:projectId/tasks/:taskId
