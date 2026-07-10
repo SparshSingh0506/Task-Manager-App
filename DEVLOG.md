@@ -181,3 +181,10 @@
   * Reason - This allows for a more structured and clear way of throwing errors, as well as allowing for custom error messages and status codes to be passed along with the error.
 * Refined all previously thrown errors in the service layer to use the new AppError class, and removed all redundant error handling code from the controllers, as they will now be handled by the global error handler middleware.
   * Gain - This makes the code cleaner and more maintainable, as well as allowing for more consistent error handling throughout the application.
+
+## day 25
+* Began with implementation of automated testing using supertest & vitest for the auth routes, starting with register and login.
+  * Reason - Automated testing is a good practice to ensure that the application is working as expected, and to catch any bugs that may be introduced in future changes. It also removes the manual hassle of testing the api endpoints through postman, and allows for faster development and deployment cycles.
+  * supertest - for making http requests to the server automatically with a single command.
+  * vitest - for running the actual tests and assertions.
+  * Why these over other testing libraries - I wanted to use a testing library that is lightweight and fast, and also has good support for TypeScript, which vitest provides.
