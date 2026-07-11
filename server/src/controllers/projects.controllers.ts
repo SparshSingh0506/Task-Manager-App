@@ -21,7 +21,7 @@ export const postProjectController = async (req: Request, res: Response, next: N
 
     return res.status(201).json({
       message: "Project created successfully.",
-      projectDetails: createdProjectDetails
+      data: createdProjectDetails
     })
   }
 
@@ -37,7 +37,7 @@ export const getAllProjectsController = async (req: Request, res: Response, next
 
     return res.status(200).json({
       message: "All Projects retrieved successfully.",
-      projects: allProjectsDetails
+      data: allProjectsDetails
     })
   }
 
@@ -58,7 +58,7 @@ export const getProjectByIdController = async (req: Request, res: Response, next
     
     return res.status(200).json({
       message: "Project retrieved successfully.",
-      projectDetails: projectDetails
+      data: projectDetails
     })
   }
   
@@ -77,7 +77,7 @@ export const deleteProjectController = async (req: Request, res: Response, next:
 
     return res.status(200).json({
       message: "Project deleted succesfully.",
-      projectDetails: deletedProjectDetails
+      data: deletedProjectDetails
     })
   }
 
@@ -97,7 +97,7 @@ export const patchProjectController = async (req: Request, res: Response, next: 
 
     return res.status(200).json({
       message: "Project updated succesfully.",
-      projectDetails: patchedProjectDetails
+      data: patchedProjectDetails
     })
   }
 

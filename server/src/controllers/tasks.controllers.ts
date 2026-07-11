@@ -14,14 +14,11 @@ export const postTaskController = async (req: Request, res: Response, next: Next
 
     res.status(201).json({
       message: "Task created succesfully.",
-      taskDetail: createdTaskDetails
+      data: createdTaskDetails
     })
   }
 
-  catch (error: any) {
-    error.status = 400;
-    error.message = "Task creation failed.";
-
+  catch (error) {
     next(error);
   }
 }
@@ -36,11 +33,11 @@ export const getAllTasksController = async (req: Request, res: Response, next: N
 
     res.status(200).json({
       message: "All tasks retrieved successfully.",
-      tasks: allTasksDetails
+      data: allTasksDetails
     })
   }
 
-  catch (error: any) {
+  catch (error) {
     next(error);
   }
 }
@@ -56,11 +53,11 @@ export const getTaskByIdController = async (req: Request, res: Response, next: N
 
     res.status(200).json({
       message: "Task retrieved successfully.",
-      taskDetails: taskDetails
+      data: taskDetails
     })
   }
 
-  catch(error: any) {
+  catch(error) {
     next(error);
   }
 }
@@ -76,11 +73,11 @@ export const deleteTaskController = async (req: Request, res: Response, next: Ne
 
     res.status(200).json({
       message: "Task deleted successfully.",
-      taskDetails: deletedTaskDetails
+      data: deletedTaskDetails
     })
   }
 
-  catch(error: any) {
+  catch(error) {
     next(error);
   }
 }
@@ -96,7 +93,7 @@ export const patchTaskController = async (req: Request, res: Response, next: Nex
 
     return res.status(200).json({
       message: "Task updated succesfully.",
-      projectDetails: patchedTaskDetails
+      data: patchedTaskDetails
     })
   }
 

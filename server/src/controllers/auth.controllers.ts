@@ -10,7 +10,7 @@ export const registerUserController = async (req: Request, res: Response, next: 
 
     return res.status(201).json({
       message: "User registered successfully.",
-      userDetails: createdUserDetails
+      data: createdUserDetails
     });
   }
 
@@ -26,7 +26,7 @@ export const loginUserController = async (req: Request, res: Response, next: Nex
 
     res.status(200).json({
       message: "User login successfull.",
-      accessToken: accessToken
+      data: accessToken
     });
   }
 
