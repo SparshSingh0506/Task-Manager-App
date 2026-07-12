@@ -1,16 +1,28 @@
 import type { CreateProjectInput, PatchProjectSchema } from "../schemas/projects.zod-schemas.js";
-import { createProject, getAllProjectsByUserId, deleteProject, getProjectById, updateProject } from "../repositories/projects.repository.js";
+import { createProject, getAllProjectsByUserId, deleteProject, getProjectById, updateProject, getTotalProjects } from "../repositories/projects.repository.js";
 import { AppError } from "../utils/errors/errors.util.js";
 
 
-// no business logic here yet, but keeping it open for future scaling
 export const createProjectService = (createProjectInput: CreateProjectInput) => {
   return createProject(createProjectInput);
 }
 
 
-export const getAllProjectsService = (userId: string) => {
-  return getAllProjectsByUserId(userId);
+export const getAllProjectsService = async (userId: string, page: number, limit: number) => {
+  const offset = (page - 1) * limit;
+
+  const [paginatedProjects, totalProjects ] = await Promise.all([
+    getAllProjectsByUserId(userId, limit, offset), 
+    getTotalProjects(userId)
+  ]);
+
+  const totalPages = Math.ceil(totalProjects / limit)
+
+  return {
+    paginatedProjects,
+    totalProjects, 
+    totalPages
+  };
 }
 
 

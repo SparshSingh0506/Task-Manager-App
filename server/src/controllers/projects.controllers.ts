@@ -30,14 +30,23 @@ export const postProjectController = async (req: Request, res: Response, next: N
   }
 }
 
-
 export const getAllProjectsController = async (req: Request, res: Response, next: NextFunction) => {
+  const page = Number(req.query.page) || 1;
+
+  const MAX_LIMIT = 20;
+  const limit = Math.max(1, Math.min(Number(req.query.limit) || 10, MAX_LIMIT));
+
   try {
-    const allProjectsDetails = await getAllProjectsService(req.userId);
+    const { paginatedProjects, ...paginationDetails} = await getAllProjectsService(req.userId, page, limit);
 
     return res.status(200).json({
       message: "All Projects retrieved successfully.",
-      data: allProjectsDetails
+      data: paginatedProjects,
+      pagination: {
+        page,
+        limit,
+        ...paginationDetails
+      }
     })
   }
 

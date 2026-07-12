@@ -26,22 +26,40 @@ export const createProject = async (createProjectInput: CreateProjectInput): Pro
 }
 
 
-export const getAllProjectsByUserId = async (userId: string): Promise<Project[]> => {
+export const getAllProjectsByUserId = async (userId: string, limit: number, offset: number): Promise<Project[]> => {
   const query = `
-    SELECT * FROM projects
+    SELECT * 
+    FROM projects
     WHERE user_id = $1
+    ORDER BY updated_at DESC
+    LIMIT $2
+    OFFSET $3
   `;
 
-  const values = [userId];
+  const values = [userId, limit, offset];
 
   const result = await db.query<Project>(query, values);
 
   return result.rows;
 }
 
+export const getTotalProjects = async(userId: string): Promise<number> => {
+  const query = `
+    SELECT COUNT(*) 
+    FROM projects
+    WHERE user_id = $1
+  `;
+
+  const values = [userId];
+
+  const result = await db.query(query, values);
+
+  return Number(result.rows[0].count);
+}
+
 
 export const getProjectById = async (userId: string, projectId: string): Promise<Project | null> => {
-  const query =`
+  const query = `
     SELECT * FROM projects 
     WHERE 
       user_id = $1
@@ -76,9 +94,9 @@ export const deleteProject = async (userId: string, projectId: string): Promise<
 
 
 export const updateProject = async (userId: string, projectId: string, updates: PatchProjectSchema): Promise<Project | null> => {
-  const {setClause, values } = buildSetClause(updates);
-  
-  values.push(...[userId, projectId]);  
+  const { setClause, values } = buildSetClause(updates);
+
+  values.push(...[userId, projectId]);
 
   const n = values.length;
 
@@ -93,7 +111,7 @@ export const updateProject = async (userId: string, projectId: string, updates: 
       id = $${n}
     RETURNING *
   `;
-  
+
   const result = await db.query<Project>(query, values);
 
   return result.rows[0] ?? null;
