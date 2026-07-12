@@ -188,3 +188,8 @@
   * supertest - for making http requests to the server automatically with a single command.
   * vitest - for running the actual tests and assertions.
   * Why these over other testing libraries - I wanted to use a testing library that is lightweight and fast, and also has good support for TypeScript, which vitest provides.
+
+## day 26
+* Implemented pagination for GET /projects and GET /projects/:projectId/tasks endpoints.
+  * Reason - Pagination is a good practice to ensure that the application does not return too much data at once, which can lead to performance issues and slow response times. It also allows for better user experience, as the user can load more data as needed, rather than being overwhelmed with too much data at once.
+  * Approach - Used query parameters for page and limit, and calculated the offset based on the page and limit values. Then, used the offset and limit values in the sql query to return only the relevant data for the requested page.

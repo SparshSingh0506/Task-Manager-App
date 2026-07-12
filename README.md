@@ -113,8 +113,7 @@ This project was intentionally built without a frontend so the focus stays on ba
 If I continue this project later, the next improvements would be:
 
 - automated tests
-- pagination and filtering
 - structured logging
-- rate limiting and security hardening
+- rate limiting
 - more detailed API documentation
 - transaction handling for multi-step workflows
