@@ -27,13 +27,22 @@ export const postTaskController = async (req: Request, res: Response, next: Next
 export const getAllTasksController = async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.userId;
   const projectId = req.params.projectId as string;
+  const page = Number(req.query.page) || 1;
+
+  const MAX_LIMIT = 20;
+  const limit = Math.max(1, Math.min(Number(req.query.limit) || 10, MAX_LIMIT));
 
   try {
-    const allTasksDetails = await getAllTasksService(userId, projectId);
+    const { paginatedTasks, ...paginationDetails } = await getAllTasksService(userId, projectId, page, limit);
 
     res.status(200).json({
       message: "All tasks retrieved successfully.",
-      data: allTasksDetails
+      data: paginatedTasks,
+      pagination: {
+        page,
+        limit,
+        ...paginationDetails
+      }
     })
   }
 

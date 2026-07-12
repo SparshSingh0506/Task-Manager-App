@@ -1,6 +1,6 @@
 import { AppError } from "../utils/errors/errors.util.js";
 import { getProjectById } from "../repositories/projects.repository.js";
-import { createTask, deleteTask, getAllTasksByProjectId, getTaskById, updateTask } from "../repositories/tasks.repository.js";
+import { createTask, deleteTask, getAllTasksByProjectId, getTaskById, getTotalTasksByProjectId, updateTask } from "../repositories/tasks.repository.js";
 import type { CreateTaskInput, PatchTaskSchema } from "../schemas/tasks.zod-schemas.js";
 
 
@@ -13,13 +13,25 @@ export const createTaskService = async (CreateTaskInput: CreateTaskInput) => {
 }
 
 
-export const getAllTasksService = async (userId: string, projectId: string) => {
+export const getAllTasksService = async (userId: string, projectId: string, page: number, limit: number) => {
   const projectDetails = await getProjectById(userId, projectId);
+  const offset = (page - 1) * limit;
 
   // Check project exists and is owned by the correct user
   if (!projectDetails) throw new AppError(404, "Project not found.")
 
-  return await getAllTasksByProjectId(projectId);
+  const [paginatedTasks, totalTasks] = await Promise.all([
+    getAllTasksByProjectId(projectId, limit, offset),
+    getTotalTasksByProjectId(projectId)
+  ]);
+
+  const totalPages = Math.ceil(totalTasks / limit);
+
+  return {
+    paginatedTasks,
+    totalTasks,
+    totalPages
+  };
 }
 
 

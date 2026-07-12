@@ -47,17 +47,35 @@ export const createTask = async (createTaskInput: CreateTaskInput): Promise<Task
 }
 
 
-export const getAllTasksByProjectId = async (projectId: string): Promise<Task[]> => {
+export const getAllTasksByProjectId = async (projectId: string, limit: number, offset: number): Promise<Task[]> => {
   const query = `
     SELECT * FROM tasks
+    WHERE project_id = $1
+    ORDER BY updated_at DESC
+    LIMIT $2
+    OFFSET $3
+  `;
+
+  const values = [projectId, limit, offset];
+
+  const result = await db.query<Task>(query, values);
+
+  return result.rows;
+}
+
+
+export const getTotalTasksByProjectId = async (projectId: string): Promise<number> => {
+  const query = `
+    SELECT COUNT(*)
+    FROM tasks
     WHERE project_id = $1
   `;
 
   const values = [projectId];
 
-  const result = await db.query<Task>(query, values);
+  const result = await db.query(query, values);
 
-  return result.rows;
+  return Number(result.rows[0].count);
 }
 
 
