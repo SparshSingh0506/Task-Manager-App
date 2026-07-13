@@ -14,7 +14,7 @@ export const registerUserController = async (req: Request, res: Response, next: 
     });
   }
 
-  catch (error: any) {
+  catch (error) {
     next(error);
   }
 }
@@ -25,7 +25,7 @@ export const loginUserController = async (req: Request, res: Response, next: Nex
     const accessToken = await loginUserService(req.body);
 
     res.status(200).json({
-      message: "User login successfull.",
+      message: "User login successful.",
       data: accessToken
     });
   }

@@ -5,12 +5,12 @@ export const errorHandler = (error: unknown, req: Request, res: Response, next: 
   if (error instanceof AppError) {
 
     console.error(
-      `[Client] ${error.status} ${req.method} ${req.originalUrl}`
+      `[Client] ${error.statusCode} ${req.method} ${req.originalUrl}`
     );
 
     console.error(error.stack);
 
-    return res.status(error.status).json({
+    return res.status(error.statusCode).json({
       message: error.message
     });
 
