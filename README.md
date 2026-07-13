@@ -114,6 +114,5 @@ If I continue this project later, the next improvements would be:
 
 - automated tests
 - structured logging
-- rate limiting
 - more detailed API documentation
 - transaction handling for multi-step workflows

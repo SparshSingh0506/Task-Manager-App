@@ -198,3 +198,6 @@
 * Implemented rate limiting for the auth routes using express-rate-limit.
   * Reason - Rate limiting is a good practice to prevent abuse of the api endpoints, and to ensure that the application does not get overwhelmed with too many requests at once. It also allows for better security, as it can prevent brute force attacks on the login endpoint.
   * Approach - Used express-rate-limit middleware to limit the number of requests to the auth routes to 10 requests per minute per IP address. If the limit is exceeded, a 429 Too Many Requests custom AppError is thrown, handled by the global error handler.
+* Implemented env validations
+  * Reason - To ensure that all required environment variables are set and valid before the application starts, preventing runtime errors and misconfigurations.
+  * Approach - Created a validateEnv function that checks for the presence and validity of required environment variables using zod schema, throwing an error if any are missing or invalid. This function is called at the start of the application to validate the environment before proceeding, so that the application does not start with missing or invalid configurations.
