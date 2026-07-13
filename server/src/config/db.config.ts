@@ -1,11 +1,12 @@
-import 'dotenv/config';
-import pg from 'pg';
+import { env } from './env.config.js';
+
+import pg, { Client } from 'pg';
 import { AppError } from "../utils/errors/errors.util.js";
 
 const { Pool } = pg;
 
 export const db = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
@@ -14,11 +15,12 @@ export const db = new Pool({
 
 export const connectToDb = async () => {
   try {
-    await db.connect();
+    const client = await db.connect();
     console.log("Connected to the database successfully.");
+    console.log(client)
   }
 
   catch(error) {
-    throw new AppError(500, `[Error] Failed to connect to the database: ${error}`);
+    throw new AppError(500, `Failed to connect to the database: ${error}`);
   }
 }

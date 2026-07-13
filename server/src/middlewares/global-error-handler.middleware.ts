@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/errors/errors.util.js";
 
-export const errorHandler = (error: unknown, req: Request, res: Response, next: NextFunction) => {
+export const globalErrorHandler = (error: unknown, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof AppError) {
 
     console.error(

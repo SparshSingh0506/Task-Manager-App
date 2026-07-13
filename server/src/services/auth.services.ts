@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import { env } from '../config/env.config.js';
 
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -29,10 +29,9 @@ export const loginUserService = async ({ email, password }: UserLoginInput) => {
 
   if (!passwordMatched) throw new AppError(401, "Invalid Credentials.");
 
-  //generate jwt
   const token = jwt.sign({
-    sub: user.id  // the client will always pass this id as payload in the token now, which is easily queryable to get all details.
-  }, process.env.JWT_SECRET!);
+    sub: user.id
+  }, env.JWT_SECRET);
 
   return token;
 }
