@@ -193,3 +193,8 @@
 * Implemented pagination for GET /projects and GET /projects/:projectId/tasks endpoints.
   * Reason - Pagination is a good practice to ensure that the application does not return too much data at once, which can lead to performance issues and slow response times. It also allows for better user experience, as the user can load more data as needed, rather than being overwhelmed with too much data at once.
   * Approach - Used query parameters for page and limit, and calculated the offset based on the page and limit values. Then, used the offset and limit values in the sql query to return only the relevant data for the requested page.
+
+## day 27
+* Implemented rate limiting for the auth routes using express-rate-limit.
+  * Reason - Rate limiting is a good practice to prevent abuse of the api endpoints, and to ensure that the application does not get overwhelmed with too many requests at once. It also allows for better security, as it can prevent brute force attacks on the login endpoint.
+  * Approach - Used express-rate-limit middleware to limit the number of requests to the auth routes to 10 requests per minute per IP address. If the limit is exceeded, a 429 Too Many Requests custom AppError is thrown, handled by the global error handler.
