@@ -21,7 +21,77 @@ This project focuses on backend fundamentals rather than UI. The goal was to bui
 - JWT for authentication
 - bcryptjs for password hashing
 - Zod for request validation
+- express-rate-limit for securing auth routes
 - Vitest & Supertest for basic testing of some routes
+
+## Folder structure
+```
+server/src/
+├── app.ts
+├── server.ts
+├── docs/
+│   └── APIs.md
+├── config/
+│   ├── db.config.ts
+│   └── env.config.ts
+├── schemas/
+│   ├── auth.zod-schemas.ts
+│   ├── db/
+│   │   └── primary-db-schema.sql
+│   ├── db.zod-schemas.draft.ts
+│   ├── env.zod-schema.ts
+│   ├── projects.zod-schemas.ts
+│   └── tasks.zod-schemas.ts
+├── routes/
+│   ├── auth.routes.ts
+│   ├── index.routes.ts
+│   ├── projects.routes.ts
+│   └── tasks.routes.ts
+├── middlewares/
+│   ├── auth-rate-limit.middleware.ts
+│   ├── authenticate.middleware.ts
+│   ├── global-error-handler.middleware.ts
+│   └── validate-requests.middleware.ts
+├── controllers/
+│   ├── auth.controllers.ts
+│   ├── projects.controllers.ts
+│   └── tasks.controllers.ts
+├── services/
+│   ├── auth.services.ts
+│   ├── projects.services.ts
+│   └── tasks.services.ts
+├── repositories/
+│   ├── projects.repository.ts
+│   ├── tasks.repository.ts
+│   └── users.repository.ts
+├── utils/
+│   ├── db/
+│   │   └── patch-query-builder.util.ts
+│   ├── errors/
+│   │   └── errors.util.ts
+│   └── validate-env.util.ts
+├── tests/
+│   ├── auth/
+│   │   ├── login.test.ts
+│   │   └── register.test.ts
+│   ├── projects/
+│   │   ├── createProject.test.ts
+│   │   ├── deleteProject.test.ts
+│   │   ├── getAllProjects.test.ts
+│   │   ├── getProject.test.ts
+│   │   └── updateProject.test.ts
+│   └── tasks/
+│       ├── createTask.test.ts
+│       ├── deleteTask.test.ts
+│       ├── getAllTasks.test.ts
+│       ├── getTask.test.ts
+│       └── updateTask.test.ts
+└── types/
+    ├── express.d.ts
+    └── schema.interfaces.ts
+
+```
+
 
 ## What I Implemented
 
