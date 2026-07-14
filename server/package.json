@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx src/server.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
