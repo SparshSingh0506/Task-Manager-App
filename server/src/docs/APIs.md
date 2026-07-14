@@ -2,7 +2,7 @@
 
 * **POST** /api/v1/auth/register
 * **POST**  /api/v1/auth/login
-* (⚠️ Pending) **PATCH** /api/v1/auth/profile (pending)
+* (⚠️ Pending) **PATCH** /api/v1/auth/profile
 
 # Projects
 
