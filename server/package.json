@@ -1,8 +1,8 @@
 {
-  "name": "Task Manager App Server",
+  "name": "Task Manager Backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A simple backend project.",
+  "main": "src/server.ts",
   "scripts": {
     "dev": "tsx src/server.ts",
     "test": "vitest",
@@ -10,7 +10,7 @@
     "start": "node dist/server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "SparshSingh0506",
   "license": "ISC",
   "type": "module",
   "dependencies": {
